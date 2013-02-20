@@ -38,7 +38,7 @@ class nagios(
     }
     'SLES': {
       $cfgdir = '/etc/nagios'
-      include nagios:suse
+      include nagios::suse
     }
     default: { fail("No such operatingsystem: ${::operatingsystem} yet defined") }
   }
