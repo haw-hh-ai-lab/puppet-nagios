@@ -1,4 +1,4 @@
-class nagios::centos inherits nagios::base {
+class nagios::suse inherits nagios::base {
 
 #
 # TODO: what about the packages 'nagios-nsca', 'nagios-www'
