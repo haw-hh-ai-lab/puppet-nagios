@@ -5,14 +5,8 @@ class nagios::nrpe::base {
     
     package { "nagios-nrpe-server": ensure => present;
 		      "nagios-plugins-basic": ensure => present;
-		      "libwww-perl": ensure => present;   # for check_apache
 	    }
 
-    # Special-case lenny. the package doesn't exist
-    if $lsbdistcodename != 'lenny' {
-        package { "libnagios-plugin-perl": ensure => present; }
-    }
-    
     file { [ $nagios_nrpe_cfgdir, "$nagios_nrpe_cfgdir/nrpe.d" ]: 
 	ensure => directory }
 
@@ -25,7 +19,9 @@ class nagios::nrpe::base {
     # add some default commands
     # FIXME: currently all commands in this file are commented out, as they use args.
     nagios::nrpe::command { "basic_nrpe":
-        source => 'puppet:///modules/nagios/nrpe/nrpe_commands.cfg',
+        source => [ "puppet:///modules/site-nagios/configs/nrpe/nrpe_commands.${fqdn}.cfg",
+                    "puppet:///modules/site-nagios/configs/nrpe/nrpe_commands.cfg",
+                    "puppet:///modules/nagios/nrpe/nrpe_commands.cfg" ],
     }
     
     # FIXME: this is far to general to be usefull.

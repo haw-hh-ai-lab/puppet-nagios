@@ -17,6 +17,10 @@ class nagios::nrpe (
         'FreeBSD': {
             include nagios::nrpe::freebsd
         }
+        'SLES': {
+            include nagios::nrpe::suse
+        }
+        
         default: {
             case $kernel {
                 linux: { include nagios::nrpe::linux }
