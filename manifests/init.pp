@@ -36,6 +36,10 @@ class nagios(
       $cfgdir = '/etc/nagios3'
       include nagios::debian
     }
+    'SLES': {
+      $cfgdir = '/etc/nagios'
+      include nagios::suse
+    }
     default: { fail("No such operatingsystem: ${::operatingsystem} yet defined") }
   }
   if $manage_munin {
