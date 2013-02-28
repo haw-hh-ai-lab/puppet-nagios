@@ -3,7 +3,7 @@ class nagios::suse inherits nagios::base {
 #
 # TODO: what about the packages 'nagios-nsca', 'nagios-www'
 #
-    package { [ 'nagios-plugins', 'nagios-plugin-extras', 'nagios-nrpe-client', 'nagios-plugins-nrpe', ]:
+    package { [ 'nagios-plugins', 'nagios-plugins-extras', 'nagios-plugins-nrpe', ]:
         ensure => 'present',
         notify => Service['nagios'],
     }
