@@ -3,16 +3,11 @@ class nagios::nrpe::base {
     if $nagios_nrpe_cfgdir == '' { $nagios_nrpe_cfgdir = '/etc/nagios' }
     if $processorcount == '' { $processorcount = 1 }
     
-    package { "nagios-nrpe-server": ensure => present;
-		      "nagios-plugins-basic": ensure => present;
-		      "libwww-perl": ensure => present;   # for check_apache
-	    }
-
-    # Special-case lenny. the package doesn't exist
-    if $lsbdistcodename != 'lenny' {
-        package { "libnagios-plugin-perl": ensure => present; }
+    package { 
+        "nagios-nrpe-server": ensure => present;
+        "nagios-plugins-basic": ensure => present; 
     }
-    
+
     file { [ $nagios_nrpe_cfgdir, "$nagios_nrpe_cfgdir/nrpe.d" ]: 
 	ensure => directory }
 
