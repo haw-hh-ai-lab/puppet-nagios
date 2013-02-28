@@ -1,4 +1,4 @@
-class nagios::nrpe::linux inherits nagios::nrpe::base {
+class nagios::nrpe::suse inherits nagios::nrpe::base {
 
 #    package { "libwww-perl": ensure => present;   # for check_apache
 #        }
