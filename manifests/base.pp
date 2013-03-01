@@ -2,6 +2,10 @@ class nagios::base {
     # include the variables
     include nagios::defaults::vars
 
+    if defined(Service['nagios-nrpe-server']) {
+      fail("installing nrpe and nagios on the same node is not supported.") 
+    }
+
     package { 'nagios':
         alias => 'nagios',
         ensure => present,
@@ -175,17 +179,12 @@ class nagios::base {
 
     # manage nagios cfg files
     # must be defined after exported resource overrides and cfg file defs
-    if ! defined(File["${nagios::defaults::vars::int_cfgdir}/"]) {
-        file { 'nagios_cfgdir':
-           path => "${nagios::defaults::vars::int_cfgdir}/",
-           ensure => directory,
-        }       
-    } 
-    
-    File ['nagios_cfgdir'] {
+    file { 'nagios_cfgdir':
+        path => "${nagios::defaults::vars::int_cfgdir}/",
+        ensure => directory,
         recurse => true,
         purge => true,
         notify => Service['nagios'],
-        mode => 0755, owner => root, group => root,
+        mode => 0755, owner => root, group => root;
     }
 }

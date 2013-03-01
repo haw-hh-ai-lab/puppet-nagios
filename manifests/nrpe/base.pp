@@ -1,5 +1,9 @@
 class nagios::nrpe::base {
 
+    if defined(Service['nagios']) {
+      fail("installing nrpe and nagios on the same node is not supported.") 
+    }
+
     if $nagios_nrpe_cfgdir == '' { $nagios_nrpe_cfgdir = '/etc/nagios' }
     if $processorcount == '' { $processorcount = 1 }
     
@@ -8,19 +12,9 @@ class nagios::nrpe::base {
         "nagios-plugins-basic": ensure => present; 
     }
 
-    file { "$nagios_nrpe_cfgdir/nrpe.d": 
+    file { [ $nagios_nrpe_cfgdir, "$nagios_nrpe_cfgdir/nrpe.d" ]: 
 	ensure => directory }
 
-    # NRPE config dir may be the same as nagios config dir.
-    if ! defined(File[$nagios_nrpe_cfgdir]) {
-       file { 'nrpe_cfgdir':
-          path => "$nagios_nrpe_cfgdir",
-          ensure => directory,
-          notify => Service['nagios-nrpe-server'],
-          mode => 0755, owner => root, group => root,
-       }
-    }       
-    
     if $nagios_nrpe_dont_blame == '' { $nagios_nrpe_dont_blame = 1 }
     file { "$nagios_nrpe_cfgdir/nrpe.cfg":
 	    content => template('nagios/nrpe/nrpe.cfg'),
