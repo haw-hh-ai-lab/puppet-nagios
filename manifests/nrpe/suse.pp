@@ -16,5 +16,7 @@ class nagios::nrpe::suse inherits nagios::nrpe::base {
         "ksh": ensure => present; # for check_cpustats.sh
         "sysstat": ensure => present; # for check_cpustats.sh
     }
+    
+    Service['nagios-nrpe-server'] { name => 'nrpe' }
 
 }
