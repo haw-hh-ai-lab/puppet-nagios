@@ -182,7 +182,7 @@ class nagios::base {
         }       
     } 
     
-    File { 'nagios_cfgdir':
+    File ['nagios_cfgdir'] {
         recurse => true,
         purge => true,
         notify => Service['nagios'],
