@@ -175,9 +175,14 @@ class nagios::base {
 
     # manage nagios cfg files
     # must be defined after exported resource overrides and cfg file defs
-    file { 'nagios_cfgdir':
-        path => "${nagios::defaults::vars::int_cfgdir}/",
-        ensure => directory,
+    if ! defined(File["${nagios::defaults::vars::int_cfgdir}/"]) {
+        file { 'nagios_cfgdir':
+           path => "${nagios::defaults::vars::int_cfgdir}/",
+           ensure => directory,
+        }       
+    } 
+    
+    File { 'nagios_cfgdir':
         recurse => true,
         purge => true,
         notify => Service['nagios'],
