@@ -186,6 +186,6 @@ class nagios::base {
         recurse => true,
         purge => true,
         notify => Service['nagios'],
-        mode => 0755, owner => root, group => root;
+        mode => 0755, owner => root, group => root,
     }
 }
