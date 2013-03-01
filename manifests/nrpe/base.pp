@@ -19,8 +19,6 @@ class nagios::nrpe::base {
           notify => Service['nagios-nrpe-server'],
           mode => 0755, owner => root, group => root,
        }
-    } else {
-       File[$nagios_nrpe_cfgdir] { alias =>  'nrpe_cfgdir', }
     }       
     
     if $nagios_nrpe_dont_blame == '' { $nagios_nrpe_dont_blame = 1 }
