@@ -40,7 +40,7 @@ class nagios::apache(
       $auth_ldap_bind_dn = $auth_config['ldap_bind_dn']
       $auth_ldap_bind_pw = $auth_config['ldap_bind_pw']
             
-      $apache_conf = template("puppet:///nagios/nagios/apache2_w_ldap.conf.erb"),
+      $apache_conf = template("puppet:///nagios/nagios/apache2_w_ldap.conf.erb")
       
     }
   }
