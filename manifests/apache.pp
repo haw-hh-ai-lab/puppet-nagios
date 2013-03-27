@@ -19,7 +19,7 @@ class nagios::apache(
     'file' : {
        $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",
                                "puppet:///site_nagios/configs/apache2.conf",
-                               "puppet:///nagios/configs/apache2.conf"]),  
+                               "puppet:///nagios/configs/apache2.conf"])  
     }
 
     'ldap' : {
