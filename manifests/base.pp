@@ -1,4 +1,6 @@
-class nagios::base {
+class nagios::base (
+   $auth_type = 'file',
+ ){
     # include the variables
     include nagios::defaults::vars
 
@@ -37,13 +39,11 @@ class nagios::base {
         notify => Service['apache'],
     }
 
-    file { 'nagios_htpasswd':
-        path => "${nagios::defaults::vars::int_cfgdir}/htpasswd.users",
-        source => [ "puppet:///modules/site_nagios/htpasswd.users",
-                    "puppet:///modules/nagios/htpasswd.users" ],
-        mode => 0640, owner => root, group => apache;
+    case $auth_type {
+    'file' : { include nagios::auth::file };
+    'ldap' : { include nagios::auth::ldap };
     }
-
+    
     file { 'nagios_private':
         path => "${nagios::defaults::vars::int_cfgdir}/private/",
         ensure => directory,

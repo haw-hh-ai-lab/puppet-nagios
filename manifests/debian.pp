@@ -1,4 +1,6 @@
-class nagios::debian inherits nagios::base {
+class nagios::debian (
+    $auth_type = 'file',
+  ) inherits nagios::base {
 
     Package['nagios'] { name => 'nagios3' }
 
