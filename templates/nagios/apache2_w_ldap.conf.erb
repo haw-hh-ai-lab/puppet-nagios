@@ -1,0 +1,91 @@
+#
+# Apache configuration for nagios
+#
+
+#LDAPTrustedCA /etc/x509/informatik-ca.crt
+#LDAPTrustedCAType BASE64_FILE
+
+NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80
+NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
+
+<VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80>
+  ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
+  DocumentRoot /usr/share/nagios
+  ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+  Redirect seeother / https://<%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+</VirtualHost>
+
+<VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443>
+  ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
+  DocumentRoot /usr/share/nagios
+  ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+  ScriptAlias /nagios/cgi-bin/ <%= scope.lookupvar('nagios::params::cgi_dir') %>
+  Alias  /  <%= scope.lookupvar('nagios::params::web_dir') %>
+
+  SSLEngine on
+  SSLCertificateFile /etc/apache2/ssl.crt/nagios.informatik.haw-hamburg.de.crt
+  SSLCertificateKeyFile /etc/apache2/ssl.key/nagios.informatik.haw-hamburg.de-clear-key.pem
+  SSLCACertificateFile /etc/x509/informatik-ca.crt
+
+  ErrorLog /var/log/apache2/nagios-error_log
+  CustomLog /var/log/apache2/nagios-access_log combined
+
+  <Directory /usr/lib/nagios/cgi/>
+     Options ExecCGI
+     SSLRequireSSL
+
+     Order deny,allow
+     Allow from all
+     Deny from none
+
+     AuthType Basic
+     AuthName "Nagios"
+     AuthBasicProvider ldap
+
+     AuthLDAPURL <%= scope.lookupvar('nagios::apache::auth_ldap_url') %>
+     AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
+     AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
+
+     AuthzLDAPAuthoritative on
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPGroupAttributeIsDN off
+
+     require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+
+  </Directory>
+
+  <Directory /usr/share/nagios/>
+     Options None
+     SSLRequireSSL
+
+     Order deny,allow
+     Allow from all
+      Deny from none
+
+     AuthType Basic
+     AuthName "Nagios"
+     AuthBasicProvider ldap
+
+     AuthLDAPURL <%= scope.lookupvar('nagios::apache::auth_ldap_url') %>
+     AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
+     AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
+
+     AuthzLDAPAuthoritative on
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPGroupAttributeIsDN off
+
+     require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+
+  </Directory>
+
+  <Directory /usr/share/nagios/images/logos>
+     Options SymLinksIfOwnerMatch
+     SSLRequireSSL
+     allow from all
+     order allow,deny
+  </Directory>
+
+</VirtualHost>
