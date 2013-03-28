@@ -10,14 +10,13 @@ class nagios::apache(
     allow_external_cmd => $allow_external_cmd,
     manage_munin => $manage_munin,
     manage_shorewall => $manage_shorewall,
-    auth_type => $auth_type,
   }
 
   case $auth_type {
     'file' : {
        $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",
                                "puppet:///site_nagios/configs/apache2.conf",
-                               "puppet:///nagios/configs/apache2.conf"]),  
+                               "puppet:///nagios/configs/apache2.conf"])  
     }
 
     'ldap' : {
@@ -38,7 +37,7 @@ class nagios::apache(
       $auth_ldap_bind_dn = $auth_config['ldap_bind_dn']
       $auth_ldap_bind_pw = $auth_config['ldap_bind_pw']
             
-      $apache_conf = template("puppet:///nagios/nagios/apache2_w_ldap.conf.erb"),
+      $apache_conf = template("puppet:///nagios/nagios/apache2_w_ldap.conf.erb")
       
     }
   }
