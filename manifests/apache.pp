@@ -10,7 +10,6 @@ class nagios::apache(
     allow_external_cmd => $allow_external_cmd,
     manage_munin => $manage_munin,
     manage_shorewall => $manage_shorewall,
-    auth_type => $auth_type,
   }
 
   include apache::mod::cgi
