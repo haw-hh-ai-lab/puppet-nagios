@@ -3,7 +3,7 @@ class nagios::apache(
   $manage_shorewall = false,
   $manage_munin = false,
   $auth_type = 'file',
-  $auth_config = [],
+  $auth_config = {},
 ) {
   class{'nagios':
     httpd => 'apache',
