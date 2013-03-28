@@ -34,12 +34,12 @@ class nagios::apache(
       #
       #   nagios::params::cgi_dir
       #   nagios::params::web_dir
-      $auth_ldap_require = $auth_config['ldap_require']  
-      $auth_ldap_url = $auth_config['ldap_url']
-      $auth_ldap_bind_dn = $auth_config['ldap_bind_dn']
-      $auth_ldap_bind_pw = $auth_config['ldap_bind_pw']
+      $auth_ldap_require = $auth_config[ldap_require]  
+      $auth_ldap_url = $auth_config[ldap_url]
+      $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
+      $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
             
-      $apache_conf = template("puppet:///nagios/nagios/apache2_w_ldap.conf.erb")
+      $apache_conf = template('nagios/nagios/apache2_w_ldap.conf.erb')
       
     }
   }
