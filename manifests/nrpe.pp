@@ -12,7 +12,7 @@ class nagios::nrpe (
     $nagios_nrpe_pid_file =  $pid_file
     $nagios_plugin_dir = $plugin_dir
     $nagios_nrpe_allowed_hosts = $allowed_hosts
-    
+ 
     case $operatingsystem {
         'FreeBSD': {
             include nagios::nrpe::freebsd
@@ -20,6 +20,9 @@ class nagios::nrpe (
         'SLES': {
             include nagios::nrpe::suse
         }
+	'Ubuntu': {
+	    include nagios::nrpe::ubuntu
+	}
         
         default: {
             case $kernel {
