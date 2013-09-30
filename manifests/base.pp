@@ -8,7 +8,12 @@ class nagios::base (
       fail("installing nrpe and nagios on the same node is not supported.") 
     }
 
+    case $::operatingsystem {
+        'Ubuntu': { $nagios_package_name='nagios3' }
+	default: { $nagios_package_name='nagios' }
+    }
     package { 'nagios':
+        name => $nagios_package_name,
         alias => 'nagios',
         ensure => present,
     }
