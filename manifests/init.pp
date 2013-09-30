@@ -40,7 +40,11 @@ class nagios(
       $cfgdir = '/etc/nagios'
       include nagios::suse
     }
-    default: { fail("No such operatingsystem: ${::operatingsystem} yet defined") }
+    'Ubuntu': {
+      $cfgdir = '/etc/nagios'
+      include nagios::ubuntu
+    }
+    default: { fail("No such operatingsystem: ${::operatingsystem} defined yet") }
   }
   if $manage_munin {
     include nagios::munin
