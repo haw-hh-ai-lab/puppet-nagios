@@ -12,10 +12,10 @@ class nagios::apache(
     manage_shorewall => $manage_shorewall,
   }
 
-  include apache::mod::cgi
+  apache::mod { 'cgi': }
 
   # no password entry without encryption
-  include apache::mod::ssl
+  apache::mod { 'ssl': }
 
   #
   # set up the parameter for the apache configuration template
@@ -37,6 +37,10 @@ class nagios::apache(
     }
 
     'ldap' : {
+
+      # add the module
+      apache::mod { 'authnz_ldap': }
+
       #
       # template takes the following arguments:
       #
