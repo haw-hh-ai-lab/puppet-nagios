@@ -14,6 +14,9 @@ class nagios::apache(
 
   include apache::mod::cgi
 
+  # no password entry without encryption
+  include apache::mod::ssl
+
   case $auth_type {
     'file' : {
        $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",
