@@ -41,7 +41,7 @@ class nagios(
       include nagios::suse
     }
     'Ubuntu': {
-      $cfgdir = '/etc/nagios'
+      $cfgdir = '/etc/nagios3'
       include nagios::ubuntu
     }
     default: { fail("No such operatingsystem: ${::operatingsystem} defined yet") }
