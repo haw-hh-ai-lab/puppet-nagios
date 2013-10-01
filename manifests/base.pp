@@ -9,8 +9,14 @@ class nagios::base (
     }
 
     case $::operatingsystem {
-        'Ubuntu': { $nagios_package_name='nagios3' }
-	default: { $nagios_package_name='nagios' }
+        'Ubuntu': { 
+		$nagios_package_name='nagios3', 
+		$nagios_service_name='nagios3'
+	}
+	default: { 
+		$nagios_package_name='nagios',
+		$nagios_service_name='nagios'
+	}
     }
     package { 'nagios':
         name => $nagios_package_name,
@@ -19,6 +25,7 @@ class nagios::base (
     }
 
     service { 'nagios':
+	name => $nagios_service_name,
         ensure => running,
         enable => true,
         #hasstatus => true, #fixme!
