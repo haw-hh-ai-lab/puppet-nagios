@@ -17,6 +17,18 @@ class nagios::apache(
   # no password entry without encryption
   include apache::mod::ssl
 
+  #
+  # set up the parameter for the apache configuration template
+  #
+  $web_ip = $::ipaddress
+  $server_admin = "monitoring@$::domain"
+  $vhost_name = $::fqdn
+
+  # TODO: this is ubuntu only
+  $ssl_cert_file = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+  $ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
+  $ssl_ca_cert_file = "/etc/ssl/certs/ca-certificates.crt"
+
   case $auth_type {
     'file' : {
        $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",

@@ -26,9 +26,9 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
   Alias  /  <%= scope.lookupvar('nagios::params::web_dir') %>
 
   SSLEngine on
-  SSLCertificateFile /etc/apache2/ssl.crt/nagios.informatik.haw-hamburg.de.crt
-  SSLCertificateKeyFile /etc/apache2/ssl.key/nagios.informatik.haw-hamburg.de-clear-key.pem
-  SSLCACertificateFile /etc/x509/informatik-ca.crt
+  SSLCertificateFile <%= scope.lookupvar('nagios:apache:ssl_cert_file') %>
+  SSLCertificateKeyFile  <%= scope.lookupvar('nagios:apache:ssl_key_file') %>
+  SSLCACertificateFile  <%= scope.lookupvar('nagios:apache:ssl_ca_cert_file') %>
 
   ErrorLog /var/log/apache2/nagios-error_log
   CustomLog /var/log/apache2/nagios-access_log combined
