@@ -43,7 +43,7 @@ define nagios::service (
     }
 
     Nagios_service["${real_name}"] {
-      check_command => $check_command,
+      check_command => $real_check_command,
       host_name => $host_name,
       use => $use,
       service_description => $service_description ?{
