@@ -19,7 +19,7 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
 
 <VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443>
   ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
-  DocumentRoot /usr/share/nagios
+  DocumentRoot <%= scope.lookupvar('nagios::params::web_dir') %>
   ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
 
   ScriptAlias /nagios/cgi-bin/ <%= scope.lookupvar('nagios::params::cgi_dir') %>
@@ -33,7 +33,7 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
   ErrorLog /var/log/apache2/nagios-error_log
   CustomLog /var/log/apache2/nagios-access_log combined
 
-  <Directory /usr/lib/nagios/cgi/>
+  <Directory <%= scope.lookupvar('nagios::params::cgi_dir') %>>
      Options ExecCGI
      SSLRequireSSL
 
@@ -57,8 +57,8 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
 
   </Directory>
 
-  <Directory /usr/share/nagios/>
-     Options None
+  <Directory <%= scope.lookupvar('nagios::params::web_dir') %>>
+     Options SymLinksIfOwnerMatch
      SSLRequireSSL
 
      Order deny,allow
@@ -81,7 +81,7 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
 
   </Directory>
 
-  <Directory /usr/share/nagios/images/logos>
+  <Directory <%= scope.lookupvar('nagios::params::web_dir') %>/images/logos>
      Options SymLinksIfOwnerMatch
      SSLRequireSSL
      allow from all
