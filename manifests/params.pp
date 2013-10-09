@@ -10,5 +10,6 @@ class nagios::params {
 		default: {
 			fail("running nagios monitoring server not supported on  operating system $::operatingsystem")
 		}
+	}
 
 } 
