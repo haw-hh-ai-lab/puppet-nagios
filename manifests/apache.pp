@@ -64,7 +64,8 @@ class nagios::apache(
       
     }
   }
-  
+ 
+  # additional details depending on the operating system 
   case $::operatingsystem {
     'debian': { }
     'SLES':   {
@@ -74,12 +75,19 @@ class nagios::apache(
        }
       
      }
+    'Ubuntu': {
+	file { '/usr/share/nagios3/htdocs/stylesheets':
+		ensure => link,
+		target => '/etc/nagios3/stylesheets',
+	}
+     }
 
    }
   
   file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
      ensure => present,
      content => $apache_conf,
+     notify => Service['httpd'],
    }
 
   apache::config::global { "nagios3.conf":
