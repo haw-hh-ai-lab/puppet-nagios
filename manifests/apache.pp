@@ -80,6 +80,11 @@ class nagios::apache(
 		ensure => link,
 		target => '/etc/nagios3/stylesheets',
 	}
+	file { '/etc/nagios3/stylesheets/*':
+		owner => 'root',
+		group => 'root',
+		mode => '644',
+	}
      }
 
    }
