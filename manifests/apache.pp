@@ -12,6 +12,8 @@ class nagios::apache(
     manage_shorewall => $manage_shorewall,
   }
 
+  include nagios::params
+
   apache::mod { 'cgi': }
 
   # no password entry without encryption
