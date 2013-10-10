@@ -32,12 +32,13 @@ class nagios::base (
         require => Package['nagios'],
     }
 
+    # TODO: convert me into a template!!!
     # this file should contain all the nagios_puppet-paths:
     file { 'nagios_main_cfg':
             path => "${nagios::defaults::vars::int_cfgdir}/nagios.cfg",
-            source => [ "puppet:///modules/site_nagios/configs/${::fqdn}/nagios.cfg",
-                        "puppet:///modules/site_nagios/configs/${::operatingsystem}/nagios.cfg",
-                        "puppet:///modules/site_nagios/configs/nagios.cfg",
+            source => [ "puppet:///modules/site/nagios/configs/${::fqdn}/nagios.cfg",
+                        "puppet:///modules/site/nagios/configs/${::operatingsystem}/nagios.cfg",
+                        "puppet:///modules/site/nagios/configs/nagios.cfg",
                         "puppet:///modules/nagios/configs/${::operatingsystem}/nagios.cfg",
                         "puppet:///modules/nagios/configs/nagios.cfg" ],
             notify => Service['nagios'],

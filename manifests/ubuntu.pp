@@ -1,8 +1,5 @@
 class nagios::ubuntu inherits nagios::base {
 
-#
-# TODO: what about the packages 'nagios-nsca', 'nagios-www'
-#
     package { [ 'nagios-plugins', 'nagios-plugins-extra']:
         ensure => 'present',
         notify => Service['nagios'],
@@ -42,12 +39,18 @@ class nagios::ubuntu inherits nagios::base {
     }
 
     if $nagios::allow_external_cmd {
-        file { '/var/spool/nagios':
-            ensure => 'directory',
-            require => Package['nagios'],
-            mode => 2660, 
-            owner => nagios, 
-            group => www,
-        }
+	
+
+	exec { 'set perm on nagios3/rw':
+           command => 'dpkg-statoverride --update --add nagios www-data 2710 /var/lib/nagios3/rw',
+	   unless => 'dpkg-statoverride --list | grep -q /var/lib/nagios3/rw',
+	   path => ['/bin', '/usr/sbin'],
+         }
+
+	exec { 'dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3':
+	   unless => 'dpkg-statoverride --list | grep -q /var/lib/nagios3',
+           path => ['/bin', '/usr/sbin'],
+         }
+
     }
 }
