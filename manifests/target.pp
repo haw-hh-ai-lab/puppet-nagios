@@ -4,7 +4,9 @@ class nagios::target(
   $parents = 'absent',
   $address = $::ipaddress,
   $nagios_alias = $::hostname,
-  $hostgroups = 'absent'
+  $hostgroups = 'absent',
+  $contact_groups = 'absent',
+  $contacts = 'absent'
 ){
   @@nagios_host { $::fqdn:
     address => $address,
@@ -19,4 +21,14 @@ class nagios::target(
   if ($hostgroups != 'absent') {
     Nagios_host["${::fqdn}"] { hostgroups => $hostgroups }  
   }
+
+  if ($contact_groups != 'absent') {
+    Nagios_host["${::fqdn}"] { contact_groups => $contact_groups }
+  }
+
+  if ($contacts != 'absent') {
+    Nagios_host["${::fqdn}"] { contacts => $contacts }
+  }
+
+
 }
