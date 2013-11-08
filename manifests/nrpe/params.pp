@@ -14,7 +14,7 @@ class nagios::nrpe::params {
     }
     'Ubuntu': {
        $default_nrpe_cfgdir = '/etc/nagios'
-       $default_nrpe_pid_file =  '/var/run/nrpe.pid'
+       $default_nrpe_pid_file =  '/var/run/nagios/nrpe.pid'
        $default_plugin_dir = '/usr/lib/nagios/plugins'
     }
      default: {
