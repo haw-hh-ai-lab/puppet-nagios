@@ -23,9 +23,6 @@ class nagios::nrpe (
        'Ubuntu': {
             include nagios::nrpe::ubuntu
         }
-        'Debian':{
-            if $nagios_nrpe_pid_file == '' { $nagios_nrpe_pid_file = '/var/run/nagios/nrpe.pid' }
-        }
         default: {
             case $kernel {
                 linux: { include nagios::nrpe::linux }
