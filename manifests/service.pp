@@ -40,10 +40,10 @@ define nagios::service (
       include nagios::command::nrpe_timeout
 
       if ($nrpe_args != '') {
-        $real_check_command = 
+        $real_check_command =
           "check_nrpe_timeout!${nrpe_timeout}!${check_command}!\"${nrpe_args}\""
       } else {
-        $real_check_command = 
+        $real_check_command =
           "check_nrpe_1arg_timeout!${nrpe_timeout}!${check_command}"
       }
     } else {
