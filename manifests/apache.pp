@@ -4,6 +4,13 @@ class nagios::apache(
   $manage_munin = false,
   $auth_type = 'file',
   $auth_config = {},
+  #TODO ubuntu specific
+  $ssl_cert_file = "${apache::params::ssl_certs_dir}/${::fqdn}.crt",
+  $ssl_key_file = "/etc/ssl/private/${::fqdn}-key.pem",
+  $ssl_ca_cert_file = "${apache::params::ssl_certs_dir}/ca-certificates.crt",
+  $ssl_cert_src = undef,
+  $ssl_key_src = undef,
+  $ssl_ca_cert_src = undef,
 ) {
   class{'nagios':
     httpd => 'apache',
@@ -26,10 +33,6 @@ class nagios::apache(
   $server_admin = "monitoring@$::domain"
   $vhost_name = $::fqdn
 
-  # TODO: this is ubuntu only
-  $ssl_cert_file = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-  $ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
-  $ssl_ca_cert_file = "/etc/ssl/certs/ca-certificates.crt"
 
   case $auth_type {
     'file' : {
@@ -105,6 +108,25 @@ class nagios::apache(
      }
 
    }
+
+   file { $ssl_cert_file :
+      ensure => present,
+      source => $ssl_cert_src,
+      notify => Service['httpd'],
+    }
+
+    file { $ssl_key_file :
+       ensure => present,
+       source => $ssl_key_src,
+       notify => Service['httpd'],
+     }
+
+     file { $ssl_ca_cert_file :
+        ensure => present,
+        source => $ssl_ca_cert_src,
+        notify => Service['httpd'],
+      }
+
   
   file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
      ensure => present,
