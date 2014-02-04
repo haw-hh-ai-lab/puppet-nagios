@@ -23,25 +23,26 @@ class nagios::apache(
   # set up the parameter for the apache configuration template
   #
   $web_ip = $::ipaddress
-  $server_admin = "monitoring@$::domain"
+  $server_admin = "monitoring@${::domain}"
   $vhost_name = $::fqdn
 
   # TODO: this is ubuntu only
-  $ssl_cert_file = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-  $ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
-  $ssl_ca_cert_file = "/etc/ssl/certs/ca-certificates.crt"
+  $ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+  $ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
+  $ssl_ca_cert_file = '/etc/ssl/certs/ca-certificates.crt'
 
   case $auth_type {
     'file' : {
        $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",
-                               "puppet:///site_nagios/configs/apache2.conf",
-                               "puppet:///nagios/configs/apache2.conf"])  
+                               'puppet:///site_nagios/configs/apache2.conf',
+                               'puppet:///nagios/configs/apache2.conf'])
     }
 
     'ldap' : {
 
       # add the module
       apache::mod { 'authnz_ldap': }
+      apache::mod { 'authz_host': }
 
       #
       # template takes the following arguments:
@@ -55,25 +56,25 @@ class nagios::apache(
       #
       #   nagios::params::cgi_dir
       #   nagios::params::web_dir
-      $auth_ldap_require = $auth_config[ldap_require]  
+      $auth_ldap_require = $auth_config[ldap_require]
       $auth_ldap_url = $auth_config[ldap_url]
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
-            
+
       $apache_conf = template('nagios/nagios/apache2_w_ldap.conf.erb')
-      
+
     }
   }
- 
-  # additional details depending on the operating system 
+
+  # additional details depending on the operating system
   case $::operatingsystem {
     'debian': { }
     'SLES':   {
-      
+
       package { 'nagios-www':
          ensure => present,
        }
-      
+
      }
     'Ubuntu': {
 	file { '/usr/share/nagios3/htdocs/stylesheets':
@@ -105,7 +106,7 @@ class nagios::apache(
      }
 
    }
-  
+
   file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
      ensure => present,
      content => $apache_conf,
@@ -117,5 +118,5 @@ class nagios::apache(
      target => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
      require => File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"],
    }
-    
+
 }

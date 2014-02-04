@@ -37,10 +37,6 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
      Options ExecCGI
      SSLRequireSSL
 
-     Order deny,allow
-     Allow from all
-     Deny from none
-
      AuthType Basic
      AuthName "Nagios"
      AuthBasicProvider ldap
@@ -49,11 +45,10 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
      AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
      AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
 
-     AuthzLDAPAuthoritative on
      AuthLDAPGroupAttribute memberUid
      AuthLDAPGroupAttributeIsDN off
 
-     require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
 
   </Directory>
 
@@ -61,10 +56,6 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
      Options SymLinksIfOwnerMatch
      SSLRequireSSL
 
-     Order deny,allow
-     Allow from all
-      Deny from none
-
      AuthType Basic
      AuthName "Nagios"
      AuthBasicProvider ldap
@@ -73,19 +64,17 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
      AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
      AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
 
-     AuthzLDAPAuthoritative on
      AuthLDAPGroupAttribute memberUid
      AuthLDAPGroupAttributeIsDN off
 
-     require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
 
   </Directory>
 
   <Directory <%= scope.lookupvar('nagios::params::web_dir') %>/images/logos>
      Options SymLinksIfOwnerMatch
      SSLRequireSSL
-     allow from all
-     order allow,deny
+     Require all granted
   </Directory>
 
 </VirtualHost>
