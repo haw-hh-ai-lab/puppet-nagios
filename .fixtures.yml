@@ -1,6 +1,6 @@
 fixtures:
   repositories:
-    apache:   ""
+    apache:  "https://github.com/puppetlabs/puppetlabs-apache.git"
     dirtree: "https://github.com/AlexCline/puppet-dirtree.git"
     stdlib: 
       repo: "https://github.com/puppetlabs/puppetlabs-stdlib"
