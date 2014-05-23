@@ -1,6 +1,6 @@
 class nagios::target::fqdn(
   $hostgroups = 'absent',
-  $parents = 'absent'
+  $parents = 'absent',
   $contact_groups = 'absent',
   $contacts = 'absent'
 ) {
@@ -8,7 +8,7 @@ class nagios::target::fqdn(
     address => $::fqdn,
     hostgroups => $hostgroups,
     parents => $parents,
-    contact_groups = $contact_groups,
-    contacts = $contacts
+    contact_groups => $contact_groups,
+    contacts => $contacts
   }
 }
