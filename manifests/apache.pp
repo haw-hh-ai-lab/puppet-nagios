@@ -69,7 +69,6 @@ class nagios::apache (
       file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
         ensure  => present,
         content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
-        source  => 'puppet:///nagios/configs/apache2.conf',
         notify  => Service['httpd'],
       }
 
