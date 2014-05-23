@@ -33,7 +33,7 @@ class nagios::apache(
 
   case $auth_type {
     'file' : {
-       $apache_conf = file([ 'puppet:///nagios/configs/apache2.conf'])
+       $apache_conf = file('puppet:///nagios/configs/apache2.conf')
     }
 
     'ldap' : {
