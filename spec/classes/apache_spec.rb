@@ -21,7 +21,7 @@ describe 'nagios::apache' do
                  :ipaddress => '192.168.0.1'} }
 
   context 'basic apache web-frontend' do
-    let(:params) { { } }
+#    let(:params) { { } }
     
     it do
 
