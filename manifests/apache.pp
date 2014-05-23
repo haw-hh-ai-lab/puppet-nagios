@@ -110,10 +110,23 @@ class nagios::apache(
      notify => Service['httpd'],
    }
 
-  apache::config::global { "nagios3.conf":
-     ensure => link,
-     target => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
+ # FIXME: this breaks encapsulation by the apache module. Move me and get me accepted by the apache team.
+ # see branch config_file_helper in haw-hh-ai-lab/puppetlabs-apache
+
+ $apache_config_filename='nagios3.conf'
+ file { "apache_${apache_config_filename}":
+     ensure  => link,
+     path => "${::apache::params::confd_dir}/${name}",
+     target  => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
+     notify => Service[$::apache::params::service_name],
+     owner => $::apache::params::user,
+     group => $::apache::params::group,
+     mode => 0644,
+     require => Package[$::apache::params::service_name],
+ }
+
+ File["apache_${apache_config_filename}"] {
      require => File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"],
-   }
+ }
 
 }
