@@ -33,12 +33,12 @@ describe 'nagios::apache' do
   context 'apache web-frontend with ldap based access control' do
     let(:params) { {
                     :auth_type    => 'ldap',
-#                    :auth_config  => {
-#                        :ldap_require   => 'ldap-group cn=a_group,ou=Groups,ou=dept,o=example',
-#                        :ldap_url       => 'ldap://myldap.example.com/ou=Users,ou=dept,o=example?uid??(objectClass=posixAccount) TLS',
-#                        :ldap_bind_dn   => 'cn=auth-obj,ou=Admin,ou=dept,o=company',
-#                        :ldap_bind_pw   => 'myVerySecretPW'
-#                     }
+                    :auth_config  => {
+                        :ldap_require   => 'ldap-group cn=a_group,ou=Groups,ou=dept,o=example',
+                        :ldap_url       => 'ldap://myldap.example.com/ou=Users,ou=dept,o=example?uid??(objectClass=posixAccount) TLS',
+                        :ldap_bind_dn   => 'cn=auth-obj,ou=Admin,ou=dept,o=company',
+                        :ldap_bind_pw   => 'myVerySecretPW'
+                     }
                   } }
     
     it do
