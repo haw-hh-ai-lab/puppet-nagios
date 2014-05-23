@@ -122,11 +122,7 @@ class nagios::apache(
      owner => $::apache::params::user,
      group => $::apache::params::group,
      mode => 0644,
-     require => Package[$::apache::params::service_name],
- }
-
- File["apache_${apache_config_filename}"] {
-     require => File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"],
+     require => [ Package[$::apache::params::service_name], File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"] ]
  }
 
 }
