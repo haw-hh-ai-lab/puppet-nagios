@@ -1,3 +1,6 @@
+#
+# calls nagios::apache: use apache httpd as web server
+#
 class nagios::apache (
   $allow_external_cmd = false,
   $manage_shorewall   = false,
