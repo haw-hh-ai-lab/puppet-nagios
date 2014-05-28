@@ -4,6 +4,29 @@
 # if the parameter 'host_name' is not set to a specific host, the current
 # machine will be set. The definition will be exported to a nagios host.
 #
+# Parameters
+# ==========
+#  check_command
+#  service_description
+#
+# (optional)
+#  ensure
+#  host_name
+#  check_period
+#  normal_check_interval
+#  retry_check_interval
+#  max_check_attempts
+#  notification_interval
+#  notification_period
+#  notification_options
+#  contact_groups
+#  use                       service template to use (default: 'generic-service')
+#  use_nrpe
+#  nrpe_args
+#  nrpe_timeout              NRPE timeout in seconds (default: 10sec)
+#  servicegroups            Service groups that this service belongs to. Multiple groups must be supplied as array.
+
+#
 define nagios::service (
   $ensure = present,
   $host_name = $::fqdn,
@@ -20,7 +43,8 @@ define nagios::service (
   $service_description = 'absent',
   $use_nrpe = '',
   $nrpe_args = '',
-  $nrpe_timeout = 10
+  $nrpe_timeout = 10,
+  $servicegroups = '',
 ) {
 
   # TODO: this resource should normally accept all nagios_host parameters
@@ -103,6 +127,17 @@ define nagios::service (
     if ($contact_groups != '') {
       Nagios_service[$real_name] {
         contact_groups => $contact_groups
+      }
+    }
+
+    if ($servicegroups != '') {
+      if(is_array($servicegroups)) {
+        $real_sgs = join($servicegroups, ', ')
+      } else {
+        $real_sgs = $servicegroups
+      }
+      Nagios_service[$real_name] {
+        servicegroups => $real_sgs
       }
     }
   }

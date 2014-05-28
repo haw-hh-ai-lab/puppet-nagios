@@ -42,6 +42,8 @@ class nagios::apache (
       file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
         ensure => present,
         source => 'puppet:///nagios/configs/apache2.conf',
+
+        # TODO: get service name from apache module
         notify => Service['httpd'],
       }
 
