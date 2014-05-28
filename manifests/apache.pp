@@ -29,13 +29,13 @@ class nagios::apache (
   # set up the parameter for the apache configuration template
   #
   $web_ip = $::ipaddress
-  $server_admin = "monitoring@$::domain"
+  $server_admin = "monitoring@${::domain}"
   $vhost_name = $::fqdn
 
   # TODO: this is ubuntu only
-  $ssl_cert_file = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-  $ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
-  $ssl_ca_cert_file = "/etc/ssl/certs/ca-certificates.crt"
+  $ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+  $ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
+  $ssl_ca_cert_file = '/etc/ssl/certs/ca-certificates.crt'
 
   case $auth_type {
     'file' : {
@@ -71,14 +71,26 @@ class nagios::apache (
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
 
-      file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
-        ensure  => present,
-        content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
-        notify  => Service['httpd'],
+      case $apache::version::default {
+        '2.2': {
+          file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
+            ensure  => present,
+            content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
+            notify  => Service['httpd'],
+          }
+        }
+        '2.4': {
+          file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
+            ensure  => present,
+            content => template('nagios/nagios/apache2_w_ldap_v2.4.conf.erb'),
+            notify  => Service['httpd'],
+          }
+        }
+        default: { fail("Apache version ${apache::version::default} not supported") }
       }
 
     }
-  }
+  }  # case $auth_type
 
   # additional details depending on the operating system
   case $::operatingsystem {

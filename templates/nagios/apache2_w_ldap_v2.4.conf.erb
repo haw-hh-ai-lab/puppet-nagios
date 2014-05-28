@@ -1,0 +1,80 @@
+#
+# Apache configuration for nagios
+#
+
+#LDAPTrustedCA /etc/x509/informatik-ca.crt
+#LDAPTrustedCAType BASE64_FILE
+
+NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80
+NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
+
+<VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80>
+  ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
+  DocumentRoot /usr/share/nagios
+  ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+  Redirect seeother / https://<%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+</VirtualHost>
+
+<VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443>
+  ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
+  DocumentRoot <%= scope.lookupvar('nagios::params::web_dir') %>
+  ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
+
+  ScriptAlias  <%= scope.lookupvar('nagios::params::cgi_path') %>  <%= scope.lookupvar('nagios::params::cgi_dir') %>
+  Alias  /  <%= scope.lookupvar('nagios::params::web_dir') %>
+
+  SSLEngine on
+  SSLCertificateFile <%= scope.lookupvar('nagios::apache::ssl_cert_file') %>
+  SSLCertificateKeyFile  <%= scope.lookupvar('nagios::apache::ssl_key_file') %>
+  SSLCACertificateFile  <%= scope.lookupvar('nagios::apache::ssl_ca_cert_file') %>
+
+  ErrorLog /var/log/apache2/nagios-error_log
+  CustomLog /var/log/apache2/nagios-access_log combined
+
+  <Directory <%= scope.lookupvar('nagios::params::cgi_dir') %>>
+     Options ExecCGI
+     SSLRequireSSL
+
+     AuthType Basic
+     AuthName "Nagios"
+     AuthBasicProvider ldap
+
+     AuthLDAPURL <%= scope.lookupvar('nagios::apache::auth_ldap_url') %>
+     AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
+     AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
+
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPGroupAttributeIsDN off
+
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+
+  </Directory>
+
+  <Directory <%= scope.lookupvar('nagios::params::web_dir') %>>
+     Options SymLinksIfOwnerMatch
+     SSLRequireSSL
+
+     AuthType Basic
+     AuthName "Nagios"
+     AuthBasicProvider ldap
+
+     AuthLDAPURL <%= scope.lookupvar('nagios::apache::auth_ldap_url') %>
+     AuthLDAPBindDN <%= scope.lookupvar('nagios::apache::auth_ldap_bind_dn') %>
+     AuthLDAPBindPassword <%= scope.lookupvar('nagios::apache::auth_ldap_bind_pw') %>
+
+     AuthLDAPGroupAttribute memberUid
+     AuthLDAPGroupAttributeIsDN off
+
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+
+  </Directory>
+
+  <Directory <%= scope.lookupvar('nagios::params::web_dir') %>/images/logos>
+     Options SymLinksIfOwnerMatch
+     SSLRequireSSL
+     Require all granted
+  </Directory>
+
+</VirtualHost>
