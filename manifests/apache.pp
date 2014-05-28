@@ -1,23 +1,29 @@
-class nagios::apache(
+#
+# calls nagios::apache: use apache httpd as web server
+#
+class nagios::apache (
   $allow_external_cmd = false,
-  $manage_shorewall = false,
-  $manage_munin = false,
-  $auth_type = 'file',
-  $auth_config = {},
-) {
-  class{'nagios':
-    httpd => 'apache',
+  $manage_shorewall   = false,
+  $manage_munin       = false,
+  $auth_type          = 'file',
+  $auth_config        = {
+  }
+  ,) {
+  class { 'nagios':
+    httpd              => 'apache',
     allow_external_cmd => $allow_external_cmd,
-    manage_munin => $manage_munin,
-    manage_shorewall => $manage_shorewall,
+    manage_munin       => $manage_munin,
+    manage_shorewall   => $manage_shorewall,
   }
 
   include nagios::params
 
-  apache::mod { 'cgi': }
+  apache::mod { 'cgi':
+  }
 
   # no password entry without encryption
-  apache::mod { 'ssl': }
+  apache::mod { 'ssl':
+  }
 
   #
   # set up the parameter for the apache configuration template
@@ -33,15 +39,20 @@ class nagios::apache(
 
   case $auth_type {
     'file' : {
-       $apache_conf = file([ "puppet:///site_nagios/configs/${::fqdn}/apache2.conf",
-                               "puppet:///site_nagios/configs/apache2.conf",
-                               "puppet:///nagios/configs/apache2.conf"])  
+      file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
+        ensure => present,
+        source => 'puppet:///nagios/configs/apache2.conf',
+
+        # TODO: get service name from apache module
+        notify => Service['httpd'],
+      }
+
     }
 
     'ldap' : {
-
       # add the module
-      apache::mod { 'authnz_ldap': }
+      apache::mod { 'authnz_ldap':
+      }
 
       #
       # template takes the following arguments:
@@ -55,67 +66,80 @@ class nagios::apache(
       #
       #   nagios::params::cgi_dir
       #   nagios::params::web_dir
-      $auth_ldap_require = $auth_config[ldap_require]  
+      $auth_ldap_require = $auth_config[ldap_require]
       $auth_ldap_url = $auth_config[ldap_url]
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
-            
-      $apache_conf = template('nagios/nagios/apache2_w_ldap.conf.erb')
-      
+
+      file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
+        ensure  => present,
+        content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
+        notify  => Service['httpd'],
+      }
+
     }
   }
- 
-  # additional details depending on the operating system 
+
+  # additional details depending on the operating system
   case $::operatingsystem {
-    'debian': { }
-    'SLES':   {
-      
+    'debian' : {
+    }
+    'SLES'   : {
       package { 'nagios-www':
-         ensure => present,
-       }
-      
-     }
-    'Ubuntu': {
-	file { '/usr/share/nagios3/htdocs/stylesheets':
-		ensure => link,
-		target => '/etc/nagios3/stylesheets',
-	}
-	file { [ '/usr/share/nagios3/htdocs/stylesheets/avail.css',
-		 '/usr/share/nagios3/htdocs/stylesheets/checksanity.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/cmd.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/common.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/config.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/extinfo.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/histogram.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/history.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/ministatus.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/notifications.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/outages.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/showlog.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/status.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/statusmap.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/summary.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/tac.css',
-                 '/usr/share/nagios3/htdocs/stylesheets/trends.css',
-		]:
-		owner => 'root',
-		group => 'root',
-		mode => '644',
-	}
-     }
+        ensure => present,
+      }
 
-   }
-  
-  file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
-     ensure => present,
-     content => $apache_conf,
-     notify => Service['httpd'],
-   }
+    }
+    'Ubuntu' : {
+      file { '/usr/share/nagios3/htdocs/stylesheets':
+        ensure => link,
+        target => '/etc/nagios3/stylesheets',
+      }
 
-  apache::config::global { "nagios3.conf":
-     ensure => link,
-     target => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
-     require => File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"],
-   }
-    
+      file { [
+        '/usr/share/nagios3/htdocs/stylesheets/avail.css',
+        '/usr/share/nagios3/htdocs/stylesheets/checksanity.css',
+        '/usr/share/nagios3/htdocs/stylesheets/cmd.css',
+        '/usr/share/nagios3/htdocs/stylesheets/common.css',
+        '/usr/share/nagios3/htdocs/stylesheets/config.css',
+        '/usr/share/nagios3/htdocs/stylesheets/extinfo.css',
+        '/usr/share/nagios3/htdocs/stylesheets/histogram.css',
+        '/usr/share/nagios3/htdocs/stylesheets/history.css',
+        '/usr/share/nagios3/htdocs/stylesheets/ministatus.css',
+        '/usr/share/nagios3/htdocs/stylesheets/notifications.css',
+        '/usr/share/nagios3/htdocs/stylesheets/outages.css',
+        '/usr/share/nagios3/htdocs/stylesheets/showlog.css',
+        '/usr/share/nagios3/htdocs/stylesheets/status.css',
+        '/usr/share/nagios3/htdocs/stylesheets/statusmap.css',
+        '/usr/share/nagios3/htdocs/stylesheets/summary.css',
+        '/usr/share/nagios3/htdocs/stylesheets/tac.css',
+        '/usr/share/nagios3/htdocs/stylesheets/trends.css',
+        ]:
+        owner => 'root',
+        group => 'root',
+        mode  => '644',
+      }
+    }
+
+  }
+
+  # FIXME: this breaks encapsulation by the apache module. Move me and get me
+  # accepted by the apache team.
+  # see branch config_file_helper in haw-hh-ai-lab/puppetlabs-apache
+
+  $apache_config_filename = 'nagios3.conf'
+
+  file { "apache_${apache_config_filename}":
+    ensure  => link,
+    path    => "${::apache::params::confd_dir}/${name}",
+    target  => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
+    notify  => Service[$::apache::params::service_name],
+    owner   => $::apache::params::user,
+    group   => $::apache::params::group,
+    mode    => 0644,
+    require => [
+      Package[$::apache::params::service_name],
+      File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"]]
+  }
+
 }

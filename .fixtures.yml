@@ -1,0 +1,11 @@
+fixtures:
+  repositories:
+    apache:  "https://github.com/puppetlabs/puppetlabs-apache.git"
+    # transitive dependency of puppetlabs-apache (the other is a current stdlib)
+    concat:  "https://github.com/ripienaar/puppet-concat.git"  
+    dirtree: "https://github.com/AlexCline/puppet-dirtree.git"
+    stdlib: 
+      repo: "https://github.com/puppetlabs/puppetlabs-stdlib"
+      ref: "4.1.0"
+  symlinks:
+    nagios: "#{source_dir}"
