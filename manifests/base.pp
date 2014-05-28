@@ -64,7 +64,7 @@ class nagios::base (
       "puppet:///modules/site/nagios/configs/${::operatingsystem}/cgi.cfg",
       'puppet:///modules/site/nagios/configs/cgi.cfg',
       "puppet:///modules/nagios/configs/${::operatingsystem}/cgi.cfg",
-      '"puppet:///modules/nagios/configs/cgi.cfg'],
+      'puppet:///modules/nagios/configs/cgi.cfg'],
     mode   => '0644',
     owner  => 'root',
     group  => 0,
