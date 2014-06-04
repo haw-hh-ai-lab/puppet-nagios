@@ -10,6 +10,7 @@ class nagios::apache (
   $ssl_cert_file      = $apache::params::default_ssl_cert,
   $ssl_key_file       = $apache::params::default_ssl_key,
   $ssl_certs_dir      = $apache::params::ssl_certs_dir,
+  $ssl_ca_cert_file   = "${ssl_certs_dir}/ca-certificates.crt",
   ) {
   class { 'nagios':
     httpd              => 'apache',
@@ -34,10 +35,6 @@ class nagios::apache (
   $server_admin = "monitoring@${::domain}"
   $vhost_name = $::fqdn
 
-  # TODO: this is ubuntu only
-  $ssl_cert_file = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-  $ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'
-  $ssl_ca_cert_file = '/etc/ssl/certs/ca-certificates.crt'
 
   case $auth_type {
     'file' : {
