@@ -19,7 +19,7 @@ class nagios::apache (
     manage_shorewall   => $manage_shorewall,
   }
 
-  warn("ssl_cert_file: ${ssl_cert_file}")
+  warning("ssl_cert_file: ${ssl_cert_file}")
 
   include nagios::params
 
