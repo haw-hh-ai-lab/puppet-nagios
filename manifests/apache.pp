@@ -19,6 +19,8 @@ class nagios::apache (
     manage_shorewall   => $manage_shorewall,
   }
 
+  notice("ssl_cert_file: ${ssl_cert_file}")
+
   include nagios::params
 
   apache::mod { 'cgi':
