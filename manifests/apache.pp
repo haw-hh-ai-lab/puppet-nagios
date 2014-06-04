@@ -19,7 +19,7 @@ class nagios::apache (
     manage_shorewall   => $manage_shorewall,
   }
 
-  notice("ssl_cert_file: ${ssl_cert_file}")
+  warn("ssl_cert_file: ${ssl_cert_file}")
 
   include nagios::params
 
@@ -78,7 +78,7 @@ class nagios::apache (
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
 
-      $ssl_cert_file_name = 'frugnul'
+      $ssl_cert_file_name = 'frugnul2'
 
       case $apache::version::default {
         '2.2': {
