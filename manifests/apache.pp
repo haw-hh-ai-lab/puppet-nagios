@@ -76,6 +76,8 @@ class nagios::apache (
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
 
+      $ssl_cert_file_name = $ssl_cert_file
+
       case $apache::version::default {
         '2.2': {
           file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
