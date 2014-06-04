@@ -6,9 +6,11 @@ class nagios::apache (
   $manage_shorewall   = false,
   $manage_munin       = false,
   $auth_type          = 'file',
-  $auth_config        = {
-  }
-  ,) {
+  $auth_config        = {},
+  $ssl_cert_file      = $apache::params::default_ssl_cert,
+  $ssl_key_file       = $apache::params::default_ssl_key,
+  $ssl_certs_dir      = $apache::params::ssl_certs_dir,
+  ) {
   class { 'nagios':
     httpd              => 'apache',
     allow_external_cmd => $allow_external_cmd,
@@ -56,7 +58,7 @@ class nagios::apache (
       apache::mod { 'authnz_ldap': }
 
       #
-      # template takes the following arguments:
+      # template uses:
       #
       #   web_ip: ip address of the web server
       #   server_admin: email address of the admin for the nagios web server
@@ -67,8 +69,13 @@ class nagios::apache (
       #
       #   nagios::params::cgi_dir
       #   nagios::params::web_dir
+      #
+      #   $ssl_cert_file
+      #   $ssl_key_file
+      #   $ssl_ca_cert_file
+      #
       $auth_ldap_require = $auth_config[ldap_require]
-      $auth_ldap_url = $auth_config[ldap_url]
+      $auth_ldap_url     = $auth_config[ldap_url]
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
 
