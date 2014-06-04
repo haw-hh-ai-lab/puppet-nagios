@@ -49,6 +49,7 @@ describe 'nagios::apache' do
     it do
 
       should contain_apache__mod('authnz_ldap')
+      should contain_apache__mod('ldap')
        
 
     end

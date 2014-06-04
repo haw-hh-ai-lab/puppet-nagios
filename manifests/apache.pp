@@ -51,8 +51,9 @@ class nagios::apache (
 
     'ldap' : {
       # add the module
-      apache::mod { 'authnz_ldap':
-      }
+      # TODO: this dependency should be handled by the apache puppet module itself
+      apache::mod { 'ldap': }
+      apache::mod { 'authnz_ldap': }
 
       #
       # template takes the following arguments:
