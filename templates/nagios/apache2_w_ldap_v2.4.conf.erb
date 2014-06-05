@@ -26,9 +26,9 @@ NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
   Alias  /  <%= scope.lookupvar('nagios::params::web_dir') %>
 
   SSLEngine on
-  SSLCertificateFile <%= scope.lookupvar('nagios::apache::ssl_cert_file') %>
-  SSLCertificateKeyFile  <%= scope.lookupvar('nagios::apache::ssl_key_file') %>
-  SSLCACertificateFile  <%= scope.lookupvar('nagios::apache::ssl_ca_cert_file') %>
+  SSLCertificateFile <%= scope.lookupvar('nagios::apache::ssl_cert_file_name') %>
+  SSLCertificateKeyFile  <%= scope.lookupvar('nagios::apache::ssl_key_file_name') %>
+  SSLCACertificateFile  <%= scope.lookupvar('nagios::apache::ssl_ca_cert_file_name') %>
 
   ErrorLog /var/log/apache2/nagios-error_log
   CustomLog /var/log/apache2/nagios-access_log combined

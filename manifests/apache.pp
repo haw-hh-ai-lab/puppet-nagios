@@ -15,10 +15,18 @@ class nagios::apache (
 
   include ::apache
 
-  if ($ssl_cert_file == 'unset' ) { $ssl_cert_file = $apache::params::default_ssl_cert }
-  if ($ssl_key_file == 'unset' ) { $ssl_key_file = $apache::params::default_ssl_key }
-  if ($ssl_ca_cert_file == 'unset' ) {
-    $ssl_ca_cert_file = "${apache::params::ssl_certs_dir}/ca-certificates.crt"
+  $ssl_cert_file_name = $ssl_cert_file ? {
+      'unset' => $apache::params::default_ssl_cert,
+      default => $ssl_cert_file,
+  }
+  $ssl_key_file_name = $ssl_cert_file ? {
+      'unset' => $apache::params::default_ssl_key,
+      default => $ssl_key_file,
+  }
+
+  $ssl_ca_cert_file_name = $ssl_ca_cert_file ? {
+      'unset' => "${apache::params::ssl_certs_dir}/ca-certificates.crt",
+      default => $ssl_ca_cert_file,
   }
 
   class { 'nagios':
@@ -77,9 +85,9 @@ class nagios::apache (
       #   nagios::params::cgi_dir
       #   nagios::params::web_dir
       #
-      #   $ssl_cert_file
-      #   $ssl_key_file
-      #   $ssl_ca_cert_file
+      #   $ssl_cert_file_name
+      #   $ssl_key_file_name
+      #   $ssl_ca_cert_file_name
       #
       $auth_ldap_require = $auth_config[ldap_require]
       $auth_ldap_url     = $auth_config[ldap_url]
