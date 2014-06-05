@@ -7,13 +7,19 @@ class nagios::apache (
   $manage_munin       = false,
   $auth_type          = 'file',
   $auth_config        = {},
-  $ssl_cert_file      = $apache::params::default_ssl_cert,
-  $ssl_key_file       = $apache::params::default_ssl_key,
-  $ssl_certs_dir      = $apache::params::ssl_certs_dir,
-  $ssl_ca_cert_file   = "${apache::params::ssl_certs_dir}/ca-certificates.crt",
+#  $use_ssl            = true,  (currently you cannot turn it off)
+  $ssl_cert_file      = 'unset',
+  $ssl_key_file       = 'unset',
+  $ssl_ca_cert_file   = 'unset',
   ) {
 
   include ::apache
+
+  if ($ssl_cert_file == 'unset' ) { $ssl_cert_file = $apache::params::default_ssl_cert }
+  if ($ssl_key_file == 'unset' ) { $ssl_key_file = $apache::params::default_ssl_key }
+  if ($ssl_ca_cert_file == 'unset' ) {
+    $ssl_ca_cert_file = "${apache::params::ssl_certs_dir}/ca-certificates.crt"
+  }
 
   class { 'nagios':
     allow_external_cmd => $allow_external_cmd,
