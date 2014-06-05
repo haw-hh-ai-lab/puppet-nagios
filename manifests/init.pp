@@ -2,11 +2,16 @@
 # nagios module
 # nagios.pp - everything nagios related
 #
+# do not call this module directly. Either choose a supported web server (like
+# nagios::apache or nagios::lighttpd) or the nagios::headless module for a
+# nagios server without a web frontend.
+#
 # Copyright (C) 2007 David Schmitt <david@schmitt.edv-bus.at>
 # Copyright 2008, admin(at)immerda.ch
 # Copyright 2008, Puzzle ITC GmbH
 # Marcel Haerry haerry+puppet(at)puzzle.ch
 # Simon Josi josi+puppet(at)puzzle.ch
+# Copyright 2014 Lutz Behnke <lutz.behnke@informatik.haw-hamburg.de>
 #
 # This program is free software; you can redistribute
 # it and/or modify it under the terms of the GNU
@@ -16,18 +21,11 @@
 
 # manage nagios
 class nagios(
-  $httpd = 'apache',
   $allow_external_cmd = false,
   $manage_shorewall = false,
   $manage_munin = false
 ) {
 
-  case $nagios::httpd {
-    'absent': { }
-    'lighttpd': { include ::lighttpd }
-    'apache': { include ::apache }
-    default: { include ::apache }
-  }
 
   case $::operatingsystem {
     'centos': {
@@ -46,8 +44,8 @@ class nagios(
       $cfgdir = '/etc/nagios3'
       include nagios::ubuntu
     }
-    default: { 
-      fail("No such operatingsystem: ${::operatingsystem} defined yet") 
+    default: {
+      fail("No such operatingsystem: ${::operatingsystem} defined yet")
     }
   }
 

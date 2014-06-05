@@ -3,8 +3,10 @@ class nagios::lighttpd(
   $manage_shorewall = false,
   $manage_munin = false
 ) {
+
+  include ::lighttpd
+
   class{'nagios':
-    httpd => 'lighttpd',
     allow_external_cmd => $allow_external_cmd,
     manage_munin => $manage_munin,
     manage_shorewall => $manage_shorewall,

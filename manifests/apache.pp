@@ -12,14 +12,18 @@ class nagios::apache (
   $ssl_certs_dir      = $apache::params::ssl_certs_dir,
   $ssl_ca_cert_file   = "${apache::params::ssl_certs_dir}/ca-certificates.crt",
   ) {
+
+  include ::apache
+
   class { 'nagios':
-    httpd              => 'apache',
     allow_external_cmd => $allow_external_cmd,
     manage_munin       => $manage_munin,
     manage_shorewall   => $manage_shorewall,
   }
 
   include nagios::params
+
+
 
   apache::mod { 'cgi':
   }
