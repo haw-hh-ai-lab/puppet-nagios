@@ -10,7 +10,7 @@ class nagios::apache (
   $ssl_cert_file      = $apache::params::default_ssl_cert,
   $ssl_key_file       = $apache::params::default_ssl_key,
   $ssl_certs_dir      = $apache::params::ssl_certs_dir,
-  $ssl_ca_cert_file   = "${ssl_certs_dir}/ca-certificates.crt",
+  $ssl_ca_cert_file   = "${apache::params::ssl_certs_dir}/ca-certificates.crt",
   ) {
   class { 'nagios':
     httpd              => 'apache',
