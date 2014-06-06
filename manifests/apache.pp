@@ -38,9 +38,10 @@ class nagios::apache (
 
   include nagios::params
 
-
-
   apache::mod { 'cgi': }
+  # some of the UI improvements are based on PHP5
+
+  include apache::mod::php
 
   # no password entry without encryption
   apache::mod { 'ssl': }
