@@ -48,7 +48,6 @@ class nagios::apache (
 
   # I dont think anybody uses nagios without auth-N/auth-Z
   apache::mod{ 'authn_core': }
-  apache::mod{ 'auth_basic': }
 
   #
   # set up the parameter for the apache configuration template
