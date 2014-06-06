@@ -13,6 +13,8 @@ class nagios::apache (
   $ssl_ca_cert_file   = 'unset',
   ) {
 
+  include nagios::params
+
   class { '::apache':
     mpm_module => 'prefork', # needed by php module
   }
@@ -38,9 +40,8 @@ class nagios::apache (
     httpd_service_name => $apache::params::service_name,
   }
 
-  include nagios::params
 
-  apache::mod { 'cgi': }
+
 
   # some of the UI improvements are based on PHP5
   include apache::mod::php
