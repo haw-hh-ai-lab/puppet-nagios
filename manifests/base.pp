@@ -7,33 +7,25 @@
 #   authentication should be handled.
 #
 class nagios::base (
-  $auth_type = 'file',) {
+  $auth_type = 'file') {
   # include the variables
   include nagios::defaults::vars
+
+  include nagios::params
 
   if defined(Service['nagios-nrpe-server']) {
     fail('installing nrpe and nagios on the same node is not supported.')
   }
 
-  case $::operatingsystem {
-    'Ubuntu' : {
-      $nagios_package_name = 'nagios3'
-      $nagios_service_name = 'nagios3'
-    }
-    default  : {
-      $nagios_package_name = 'nagios'
-      $nagios_service_name = 'nagios'
-    }
-  }
 
   package { 'nagios':
-    name   => $nagios_package_name,
+    name   => $nagios::params::srv_package,
     alias  => 'nagios',
     ensure => present,
   }
 
   service { 'nagios':
-    name    => $nagios_service_name,
+    name    => $nagios::params::nagios_service,
     ensure  => running,
     enable  => true,
     # hasstatus => true, #fixme!
@@ -68,7 +60,7 @@ class nagios::base (
     mode   => '0644',
     owner  => 'root',
     group  => 0,
-    notify => Service['httpd'],
+    notify => Service[$nagios::httpd_service_name],
   }
 
   case $auth_type {

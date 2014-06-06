@@ -23,7 +23,8 @@
 class nagios(
   $allow_external_cmd = false,
   $manage_shorewall = false,
-  $manage_munin = false
+  $manage_munin = false,
+  $httpd_service_name = 'httpd',
 ) {
 
 

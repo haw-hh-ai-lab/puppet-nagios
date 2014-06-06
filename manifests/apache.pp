@@ -33,6 +33,7 @@ class nagios::apache (
     allow_external_cmd => $allow_external_cmd,
     manage_munin       => $manage_munin,
     manage_shorewall   => $manage_shorewall,
+    httpd_service_name => $apache::params::service_name,
   }
 
   include nagios::params
