@@ -7,10 +7,6 @@ class nagios::centos (
         notify => Service['nagios'],
     }
 
-    Service[nagios]{
-        hasstatus => true,
-    }
-
     if $nagios::allow_external_cmd {
         file { '/var/spool/nagios/cmd':
             ensure => 'directory',

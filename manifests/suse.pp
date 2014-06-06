@@ -8,16 +8,12 @@ class nagios::suse inherits nagios::base {
         notify => Service['nagios'],
     }
 
-    Service[nagios]{
-        hasstatus => true,
-    }
-
     if $nagios::allow_external_cmd {
         file { '/var/spool/nagios':
             ensure => 'directory',
             require => Package['nagios'],
-            mode => 2660, 
-            owner => nagios, 
+            mode => 2660,
+            owner => nagios,
             group => www,
         }
     }

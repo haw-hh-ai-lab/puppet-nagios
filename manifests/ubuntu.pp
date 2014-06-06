@@ -7,10 +7,6 @@ class nagios::ubuntu inherits nagios::base {
     notify => Service['nagios'],
   }
 
-  Service[nagios] {
-    hasstatus => true,
-  }
-
   File['nagios_htpasswd', 'nagios_cgi_cfg'] {
     group => 'www-data'
   }

@@ -28,7 +28,7 @@ class nagios::base (
     name    => $nagios::params::nagios_service,
     ensure  => running,
     enable  => true,
-    # hasstatus => true, #fixme!
+    hasstatus => $nagios::params::srv_has_status,
     require => Package['nagios'],
   }
 

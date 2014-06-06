@@ -3,6 +3,7 @@
 #
 #  nagios_cfg_dir  = root directory for nagios configuration files.
 #  nagios_service  = service name of the nagios server
+#  srv_has_status  = the hasstatus feature is availiable for the nagios service.
 #  cgi_dir         =
 #  cgi_path        =
 #  web_dir         = directory where the html files are located
@@ -16,6 +17,7 @@ class nagios::params {
     'debian' : {
       $nagios_cfg_dir  = '/etc/nagios3'
       $nagios_service  = 'nagios3'
+      $srv_has_status  = 'true'
       $cgi_dir         = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path        = '/cgi-bin/nagios3/'
       $web_dir         = '/usr/share/nagios3/htdocs/'
@@ -25,6 +27,7 @@ class nagios::params {
     'Ubuntu' : {
       $nagios_cfg_dir  = '/etc/nagios3'
       $nagios_service  = 'nagios3'
+      $srv_has_status  = 'true'
       $cgi_dir         = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path        = '/cgi-bin/nagios3/'
       $web_dir         = '/usr/share/nagios3/htdocs/'
@@ -34,6 +37,7 @@ class nagios::params {
     'SLES' : {
       $nagios_cfg_dir  = '/etc/nagios'
       $nagios_service  = 'nagios'
+      $srv_has_status  = 'true'
       $cgi_dir         = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path        = '/cgi-bin/nagios3/'
       $web_dir         = '/usr/share/nagios3/htdocs/'
@@ -43,6 +47,7 @@ class nagios::params {
     'centos' : {
       $nagios_cfg_dir  = '/etc/nagios'
       $nagios_service  = 'nagios'
+      $srv_has_status  = 'true'
       $cgi_dir         = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path        = '/cgi-bin/nagios3/'
       $web_dir         = '/usr/share/nagios3/htdocs/'
