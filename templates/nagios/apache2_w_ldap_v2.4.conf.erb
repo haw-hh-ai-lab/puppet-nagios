@@ -45,7 +45,7 @@
      AuthLDAPGroupAttribute memberUid
      AuthLDAPGroupAttributeIsDN off
 
-     Require ldap-group <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
 
   </Directory>
 
@@ -64,7 +64,7 @@
      AuthLDAPGroupAttribute memberUid
      AuthLDAPGroupAttributeIsDN off
 
-     Require ldap-group <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
+     Require <%= scope.lookupvar('nagios::apache::auth_ldap_require') %>
 
   </Directory>
 
