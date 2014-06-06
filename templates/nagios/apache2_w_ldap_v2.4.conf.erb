@@ -5,9 +5,6 @@
 #LDAPTrustedCA /etc/x509/informatik-ca.crt
 #LDAPTrustedCAType BASE64_FILE
 
-NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80
-NameVirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:443
-
 <VirtualHost <%= scope.lookupvar('nagios::apache::web_ip') %>:80>
   ServerAdmin <%= scope.lookupvar('nagios::apache::server_admin') %>
   DocumentRoot /usr/share/nagios

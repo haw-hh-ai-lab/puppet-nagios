@@ -159,15 +159,15 @@ class nagios::apache (
 
   }
 
-  # FIXME: this breaks encapsulation by the apache module. Move me and get me
-  # accepted by the apache team.
+  # FIXME: this breaks encapsulation by the apache module.
+  # Move me and get me accepted by the apache team.
   # see branch config_file_helper in haw-hh-ai-lab/puppetlabs-apache
 
   $apache_config_filename = 'nagios3.conf'
 
   file { "apache_${apache_config_filename}":
     ensure  => link,
-    path    => "${::apache::params::confd_dir}/${name}",
+    path    => "${::apache::params::confd_dir}/${apache_config_filename}",
     target  => "${nagios::defaults::vars::int_cfgdir}/apache2.conf",
     notify  => Service[$::apache::params::service_name],
     owner   => $::apache::params::user,
