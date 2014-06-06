@@ -13,7 +13,9 @@ class nagios::apache (
   $ssl_ca_cert_file   = 'unset',
   ) {
 
-  include ::apache
+  class { 'apache':
+    mpm_module => 'prefork', # needed by php module
+  }
 
   $ssl_cert_file_name = $ssl_cert_file ? {
       'unset' => $apache::params::default_ssl_cert,
@@ -39,8 +41,8 @@ class nagios::apache (
   include nagios::params
 
   apache::mod { 'cgi': }
-  # some of the UI improvements are based on PHP5
 
+  # some of the UI improvements are based on PHP5
   include apache::mod::php
 
   # no password entry without encryption
