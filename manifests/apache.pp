@@ -40,13 +40,15 @@ class nagios::apache (
 
 
 
-  apache::mod { 'cgi':
-  }
+  apache::mod { 'cgi': }
 
   # no password entry without encryption
-  apache::mod { 'ssl':
-  }
+  apache::mod { 'ssl': }
   apache::listen{ '443': }
+
+  # I dont think anybody uses nagios without auth-N/auth-Z
+  apache::mod{ 'authn_core': }
+  apache::mod{ 'auth_basic': }
 
   #
   # set up the parameter for the apache configuration template
@@ -58,6 +60,9 @@ class nagios::apache (
 
   case $auth_type {
     'file' : {
+      apache::mod{ 'authn_file': }
+      apache::mod{ 'authz_user': }
+
       file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
         ensure => present,
         source => 'puppet:///nagios/configs/apache2.conf',
