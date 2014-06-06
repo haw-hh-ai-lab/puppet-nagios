@@ -13,7 +13,7 @@ class nagios::apache (
   $ssl_ca_cert_file   = 'unset',
   ) {
 
-  class { 'apache':
+  class { '::apache':
     mpm_module => 'prefork', # needed by php module
   }
 
