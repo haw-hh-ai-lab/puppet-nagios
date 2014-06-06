@@ -46,6 +46,7 @@ class nagios::apache (
   # no password entry without encryption
   apache::mod { 'ssl':
   }
+  apache::listen{ '443': }
 
   #
   # set up the parameter for the apache configuration template
