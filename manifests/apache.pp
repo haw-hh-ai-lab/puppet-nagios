@@ -60,8 +60,7 @@ class nagios::apache (
         ensure => present,
         source => 'puppet:///nagios/configs/apache2.conf',
 
-        # TODO: get service name from apache module
-        notify => Service['httpd'],
+        notify => Service[$apache::params::service_name],
       }
 
     }
@@ -99,14 +98,14 @@ class nagios::apache (
           file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
             ensure  => present,
             content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
-            notify  => Service['httpd'],
+            notify  => Service[$apache::params::service_name],
           }
         }
         '2.4': {
           file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
             ensure  => present,
             content => template('nagios/nagios/apache2_w_ldap_v2.4.conf.erb'),
-            notify  => Service['httpd'],
+            notify  => Service[$apache::params::service_name],
           }
         }
         default: { fail("Apache version ${apache::version::default} not supported") }
