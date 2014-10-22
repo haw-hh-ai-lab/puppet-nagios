@@ -19,7 +19,7 @@ class nagios::suse inherits nagios::base {
     file { '/var/spool/nagios':
       ensure  => 'directory',
       require => Package['nagios'],
-      mode    => 2660,
+      mode    => '2660',
       owner   => nagios,
       group   => www,
     }

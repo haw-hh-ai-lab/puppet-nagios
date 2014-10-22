@@ -1,5 +1,6 @@
+#
 # manifests/target.pp
-
+#
 class nagios::target(
   $parents = 'absent',
   $address = $::ipaddress,
@@ -15,19 +16,19 @@ class nagios::target(
   }
 
   if ($parents != 'absent') {
-    Nagios_host["${::fqdn}"] { parents => $parents }
+    Nagios_host[$::fqdn] { parents => $parents }
   }
 
   if ($hostgroups != 'absent') {
-    Nagios_host["${::fqdn}"] { hostgroups => $hostgroups }  
+    Nagios_host[$::fqdn] { hostgroups => $hostgroups }
   }
 
   if ($contact_groups != 'absent') {
-    Nagios_host["${::fqdn}"] { contact_groups => $contact_groups }
+    Nagios_host[$::fqdn] { contact_groups => $contact_groups }
   }
 
   if ($contacts != 'absent') {
-    Nagios_host["${::fqdn}"] { contacts => $contacts }
+    Nagios_host[$::fqdn] { contacts => $contacts }
   }
 
 
