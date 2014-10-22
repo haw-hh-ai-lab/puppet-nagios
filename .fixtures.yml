@@ -1,6 +1,8 @@
 fixtures:
   repositories:
-    apache:  "https://github.com/puppetlabs/puppetlabs-apache.git"
+    apache:  
+      repo: "https://github.com/puppetlabs/puppetlabs-apache.git"
+      ref: "1.2.x"
     # transitive dependency of puppetlabs-apache (the other is a current stdlib)
     concat:  "https://github.com/ripienaar/puppet-concat.git"  
     dirtree: "https://github.com/AlexCline/puppet-dirtree.git"
