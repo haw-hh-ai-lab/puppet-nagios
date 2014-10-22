@@ -1,3 +1,6 @@
+#
+# add suplemental plugins
+#
 class nagios::defaults::plugins {
   nagios::plugin {
     'check_mysql_health':

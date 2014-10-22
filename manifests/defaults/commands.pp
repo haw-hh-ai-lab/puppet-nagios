@@ -1,3 +1,8 @@
+#
+# install default set of commands.
+#
+
+
 class nagios::defaults::commands {
   include nagios::command::smtp
   include nagios::command::imap_pop3
