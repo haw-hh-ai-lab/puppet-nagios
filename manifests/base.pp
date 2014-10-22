@@ -19,17 +19,17 @@ class nagios::base (
 
 
   package { 'nagios':
+    ensure => present,
     name   => $nagios::params::srv_package,
     alias  => 'nagios',
-    ensure => present,
   }
 
   service { 'nagios':
-    name    => $nagios::params::nagios_service,
-    ensure  => running,
-    enable  => true,
+    ensure    => running,
+    name      => $nagios::params::nagios_service,
+    enable    => true,
     hasstatus => $nagios::params::srv_has_status,
-    require => Package['nagios'],
+    require   => Package['nagios'],
   }
 
   # TODO: convert me into a template!!!
@@ -43,7 +43,7 @@ class nagios::base (
       "puppet:///modules/nagios/configs/${::operatingsystem}/nagios.cfg",
       'puppet:///modules/nagios/configs/nagios.cfg'],
     notify => Service['nagios'],
-    mode   => 0644,
+    mode   => '0644',
     owner  => root,
     group  => root;
   }
@@ -70,7 +70,7 @@ class nagios::base (
         source => [
           'puppet:///modules/site_nagios/htpasswd.users',
           'puppet:///modules/nagios/htpasswd.users'],
-        mode   => 0640,
+        mode   => '0640',
         owner  => root,
         group  => $::apache::params::group;
       }
@@ -83,8 +83,8 @@ class nagios::base (
   }
 
   file { 'nagios_private':
-    path    => "${nagios::defaults::vars::int_cfgdir}/private/",
     ensure  => directory,
+    path    => "${nagios::defaults::vars::int_cfgdir}/private/",
     purge   => true,
     recurse => true,
     notify  => Service['nagios'],
@@ -106,8 +106,8 @@ class nagios::base (
   }
 
   file { 'nagios_confd':
-    path    => "${nagios::defaults::vars::int_cfgdir}/conf.d/",
     ensure  => directory,
+    path    => "${nagios::defaults::vars::int_cfgdir}/conf.d/",
     purge   => true,
     recurse => true,
     notify  => Service['nagios'],
@@ -217,7 +217,7 @@ class nagios::base (
     ensure  => file,
     replace => false,
     notify  => Service['nagios'],
-    mode    => 0644,
+    mode    => '0644',
     owner   => root,
     group   => 0;
   }
@@ -225,12 +225,12 @@ class nagios::base (
   # manage nagios cfg files
   # must be defined after exported resource overrides and cfg file defs
   file { 'nagios_cfgdir':
-    path    => "${nagios::defaults::vars::int_cfgdir}/",
     ensure  => directory,
+    path    => "${nagios::defaults::vars::int_cfgdir}/",
     recurse => true,
     purge   => true,
     notify  => Service['nagios'],
-    mode    => 0755,
+    mode    => '0755',
     owner   => root,
     group   => root;
   }

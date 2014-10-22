@@ -158,10 +158,10 @@ class nagios::apache (
         ]:
         owner => 'root',
         group => 'root',
-        mode  => '644',
+        mode  => '0644',
       }
     }
-
+    default: { fail("Operating system ${::operatingsystem} not suported by module nagios::apache")}
   }
 
   # FIXME: this breaks encapsulation by the apache module.
@@ -177,7 +177,7 @@ class nagios::apache (
     notify  => Service[$::apache::params::service_name],
     owner   => $::apache::params::user,
     group   => $::apache::params::group,
-    mode    => 0644,
+    mode    => '0644',
     require => [
       Package[$::apache::params::service_name],
       File["${nagios::defaults::vars::int_cfgdir}/apache2.conf"]]
