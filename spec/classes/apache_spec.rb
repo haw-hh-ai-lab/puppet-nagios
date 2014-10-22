@@ -30,6 +30,9 @@ describe 'nagios::apache' do
       should contain_apache__mod('cgi')
       should contain_apache__mod('ssl')
       
+      # will be provided by default modules of apache puppet module
+      should contain_apache__mod('authn_core')
+      
     end
   end
 

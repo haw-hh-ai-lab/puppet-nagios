@@ -50,9 +50,6 @@ class nagios::apache (
   apache::mod { 'ssl': }
   apache::listen{ '443': }
 
-  # I dont think anybody uses nagios without auth-N/auth-Z
-  apache::mod{ 'authn_core': }
-
   #
   # set up the parameter for the apache configuration template
   #
