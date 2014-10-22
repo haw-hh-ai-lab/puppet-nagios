@@ -22,7 +22,7 @@ define nagios::plugin::deploy (
   if !defined(Package[$require_package]) {
     package { $require_package:
       ensure => installed,
-      tag    => "nagios::plugin::deploy::package";
+      tag    => 'nagios::plugin::deploy::package';
     }
   }
 
@@ -35,7 +35,7 @@ define nagios::plugin::deploy (
     owner   => root,
     group   => 0,
     require => Package[$require_package],
-    tag     => "nagios::plugin::deploy::file";
+    tag     => 'nagios::plugin::deploy::file';
   }
 
   # register the plugin

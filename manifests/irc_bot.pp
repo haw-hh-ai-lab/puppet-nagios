@@ -1,3 +1,6 @@
+#
+# deploy irc bot for notification
+#
 class nagios::irc_bot(
   $nsa_socket = 'absent',
   $nsa_server,

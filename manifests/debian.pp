@@ -1,3 +1,7 @@
+#
+# configure nagios server for debian
+#
+
 class nagios::debian (
   $auth_type = 'file',) inherits nagios::base {
   Package['nagios'] {

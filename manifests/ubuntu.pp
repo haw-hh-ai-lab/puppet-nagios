@@ -1,3 +1,7 @@
+#
+# basic setup for ubuntu machines
+#
+
 class nagios::ubuntu inherits nagios::base {
   package { [
     'nagios-plugins',
@@ -12,10 +16,10 @@ class nagios::ubuntu inherits nagios::base {
   }
 
   file { 'nagios_commands_cfg':
-    path   => "${nagios::defaults::vars::int_cfgdir}/commands.cfg",
     ensure => present,
+    path   => "${nagios::defaults::vars::int_cfgdir}/commands.cfg",
     notify => Service['nagios'],
-    mode   => 0644,
+    mode   => '0644',
     owner  => root,
     group  => root;
   }
@@ -27,19 +31,19 @@ class nagios::ubuntu inherits nagios::base {
   }
 
   file { 'nagios_generic_host_cfg':
-    path   => "${nagios::defaults::vars::int_cfgdir}/conf.d/generic-host_nagios2.cfg",
     ensure => present,
+    path   => "${nagios::defaults::vars::int_cfgdir}/conf.d/generic-host_nagios2.cfg",
     notify => Service['nagios'],
-    mode   => 0644,
+    mode   => '0644',
     owner  => root,
     group  => root
   }
 
   file { 'nagios_generic_service_cfg':
-    path   => "${nagios::defaults::vars::int_cfgdir}/conf.d/generic-service_nagios2.cfg",
     ensure => present,
+    path   => "${nagios::defaults::vars::int_cfgdir}/conf.d/generic-service_nagios2.cfg",
     notify => Service['nagios'],
-    mode   => 0644,
+    mode   => '0644',
     owner  => root,
     group  => root
   }
@@ -53,7 +57,8 @@ class nagios::ubuntu inherits nagios::base {
         '/usr/sbin'],
     }
 
-    exec { 'dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3' :
+    exec { 'dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3'
+    :
       unless => 'dpkg-statoverride --list | grep -q /var/lib/nagios3',
       path   => [
         '/bin',

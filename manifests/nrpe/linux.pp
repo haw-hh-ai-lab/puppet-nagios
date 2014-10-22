@@ -3,25 +3,25 @@
 #
 
 class nagios::nrpe::linux inherits nagios::nrpe::base {
-  package { "libwww-perl":
+  package { 'libwww-perl':
     ensure => present; # for check_apache
   }
 
   # Special-case lenny. the package doesn't exist
-  if $lsbdistcodename != 'lenny' {
-    package { "libnagios-plugin-perl":
+  if $::lsbdistcodename != 'lenny' {
+    package { 'libnagios-plugin-perl':
       ensure => present;
     }
   }
 
   package {
-    "nagios-plugins-standard":
+    'nagios-plugins-standard':
       ensure => present;
 
-    "ksh":
+    'ksh':
       ensure => present; # for check_cpustats.sh
 
-    "sysstat":
+    'sysstat':
       ensure => present; # for check_cpustats.sh
   }
 

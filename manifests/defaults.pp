@@ -1,3 +1,6 @@
+#
+# configure default settings
+#
 class nagios::defaults {
 
     # include some default nagios objects

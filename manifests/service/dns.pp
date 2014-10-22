@@ -1,8 +1,11 @@
+#
+# add dns service check
+#
 define nagios::service::dns(
+  $ip,
   $host_name      = $::fqdn,
   $comment        = $name,
   $check_domain   = $name,
-  $ip
 ){
   if $name != $comment {
     $check_name = "${comment}_${name}_${::hostname}"

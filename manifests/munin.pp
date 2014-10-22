@@ -1,3 +1,6 @@
+#
+# deploy munin monitoring
+#
 class nagios::munin {
   include munin::plugins::base
 

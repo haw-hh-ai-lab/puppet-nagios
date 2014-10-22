@@ -1,3 +1,7 @@
+#
+# deploy nagios web server on ligthttpd
+#
+
 class nagios::lighttpd(
   $allow_external_cmd = false,
   $manage_shorewall = false,
