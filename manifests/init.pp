@@ -24,7 +24,7 @@ class nagios(
   $allow_external_cmd = false,
   $manage_shorewall = false,
   $manage_munin = false,
-  $httpd_service_name = 'frgunul',
+  $httpd_service_name = undef,
 ) {
 
 

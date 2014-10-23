@@ -10,6 +10,18 @@ class nagios::lighttpd(
 
   include ::lighttpd
 
+  # TODO: convert me into a template!!!
+  file { 'nagios_cgi_cfg':
+    path   => "${nagios::defaults::vars::int_cfgdir}/cgi.cfg",
+    source => [
+      "puppet:///modules/nagios/configs/${::operatingsystem}/cgi.cfg",
+      'puppet:///modules/nagios/configs/cgi.cfg'],
+    mode   => '0644',
+    owner  => 'root',
+    group  => 0,
+    notify => Service[$nagios::httpd_service_name],
+  }
+
   class{'nagios':
     allow_external_cmd => $allow_external_cmd,
     manage_munin => $manage_munin,

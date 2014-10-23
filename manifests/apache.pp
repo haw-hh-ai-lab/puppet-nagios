@@ -57,6 +57,17 @@ class nagios::apache (
   $server_admin = "monitoring@${::domain}"
   $vhost_name = $::fqdn
 
+  # TODO: convert me into a template!!!
+  file { 'nagios_cgi_cfg':
+    path   => "${nagios::defaults::vars::int_cfgdir}/cgi.cfg",
+    source => [
+      "puppet:///modules/nagios/configs/${::operatingsystem}/cgi.cfg",
+      'puppet:///modules/nagios/configs/cgi.cfg'],
+    mode   => '0644',
+    owner  => 'root',
+    group  => 0,
+    notify => Service[$::apache::params::service_name],
+  }
 
   case $auth_type {
     'file' : {
