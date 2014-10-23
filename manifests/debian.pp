@@ -25,7 +25,7 @@ class nagios::debian (
     path   => "${nagios::defaults::vars::int_cfgdir}/commands.cfg",
     ensure => present,
     notify => Service['nagios'],
-    mode   => 0644,
+    mode   => '0644',
     owner  => root,
     group  => root;
   }

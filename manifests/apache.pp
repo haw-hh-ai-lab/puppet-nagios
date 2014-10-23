@@ -60,8 +60,6 @@ class nagios::apache (
 
   case $auth_type {
     'file' : {
-      apache::mod{ 'authn_file': }
-      apache::mod{ 'authz_user': }
 
       file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
         ensure => present,
