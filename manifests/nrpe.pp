@@ -24,7 +24,7 @@ class nagios::nrpe (
       include ::nagios::nrpe::ubuntu
     }
     default   : {
-      case $kernel {
+      case $::kernel {
         linux   : { include ::nagios::nrpe::linux }
         default : { include ::nagios::nrpe::base }
       }
