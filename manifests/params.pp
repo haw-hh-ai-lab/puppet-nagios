@@ -20,6 +20,8 @@ class nagios::params {
       $cgi_dir = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path = '/cgi-bin/nagios3/'
       $web_dir = '/usr/share/nagios3/htdocs/'
+      $web_user = 'www-data',
+      $web_group = 'www-data',
       $srv_package = 'nagios3'
       $plugin_packages = [
         'nagios-plugins',
@@ -33,6 +35,8 @@ class nagios::params {
       $cgi_dir = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path = '/cgi-bin/nagios3/'
       $web_dir = '/usr/share/nagios3/htdocs/'
+      $web_user = 'www-data'
+      $web_group = 'www-data'
       $srv_package = 'nagios3'
       $plugin_packages = [
         'nagios-plugins',
@@ -46,6 +50,8 @@ class nagios::params {
       $cgi_dir = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path = '/cgi-bin/nagios3/'
       $web_dir = '/usr/share/nagios3/htdocs/'
+      $web_user = 'www'
+      $web_group = 'www'
       $srv_package = 'nagios'
       $plugin_packages = [
         'nagios-plugins',
@@ -59,6 +65,8 @@ class nagios::params {
       $cgi_dir = '/usr/lib/cgi-bin/nagios3/'
       $cgi_path = '/cgi-bin/nagios3/'
       $web_dir = '/usr/share/nagios3/htdocs/'
+      $web_user = 'www'
+      $web_group = 'www'
       $srv_package = 'nagios'
       $plugin_packages = [
         'nagios-plugins',

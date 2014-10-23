@@ -7,6 +7,7 @@ class nagios::lighttpd(
   $manage_shorewall = false,
   $manage_munin = false
 ) {
+  include ::nagios::params
 
   include ::lighttpd
 
@@ -18,7 +19,7 @@ class nagios::lighttpd(
       'puppet:///modules/nagios/configs/cgi.cfg'],
     mode   => '0644',
     owner  => 'root',
-    group  => 0,
+    group  => $::nagios::params::web_group,
     notify => Service[$nagios::httpd_service_name],
   }
 

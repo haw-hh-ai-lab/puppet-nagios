@@ -65,7 +65,7 @@ class nagios::apache (
       'puppet:///modules/nagios/configs/cgi.cfg'],
     mode   => '0644',
     owner  => 'root',
-    group  => 0,
+    group  => $::apache::params::web_group,
     notify => Service[$::apache::params::service_name],
   }
 

@@ -11,10 +11,6 @@ class nagios::ubuntu inherits nagios::base {
     notify => Service['nagios'],
   }
 
-  File['nagios_htpasswd', 'nagios_cgi_cfg'] {
-    group => 'www-data'
-  }
-
   file { 'nagios_commands_cfg':
     ensure => present,
     path   => "${nagios::defaults::vars::int_cfgdir}/commands.cfg",
