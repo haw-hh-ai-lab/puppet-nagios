@@ -20,6 +20,11 @@
   ServerName <%= scope.lookupvar('nagios::apache::vhost_name') %>
 
   ScriptAlias  <%= scope.lookupvar('nagios::params::cgi_path') %>  <%= scope.lookupvar('nagios::params::cgi_dir') %>
+
+  Alias /nagios3/stylesheets/ /etc/nagios3/stylesheets/
+  Alias /nagios3/images/ /usr/share/nagios3/htdocs/images/
+  Alias /nagios3/js/ /usr/share/nagios3/htdocs/js/
+
   Alias  /  <%= scope.lookupvar('nagios::params::web_dir') %>
 
   SSLEngine on
