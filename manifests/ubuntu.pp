@@ -50,7 +50,8 @@ class nagios::ubuntu inherits nagios::base {
       unless  => 'dpkg-statoverride --list | grep -q /var/lib/nagios3/rw',
       path    => [
         '/bin',
-        '/usr/sbin'],
+        '/usr/sbin',
+        '/usr/bin'],
     }
 
     exec { 'dpkg-statoverride --update --add nagios nagios 751 /var/lib/nagios3'
@@ -58,7 +59,8 @@ class nagios::ubuntu inherits nagios::base {
       unless => 'dpkg-statoverride --list | grep -q /var/lib/nagios3',
       path   => [
         '/bin',
-        '/usr/sbin'],
+        '/usr/sbin',
+        '/usr/bin'],
     }
 
   }
