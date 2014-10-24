@@ -34,11 +34,18 @@ class nagios::base (
 
   # TODO: convert me into a template!!!
   # this file should contain all the nagios_puppet-paths:
+  #
+  # needed infos:
+  #   log_file
+  #
+  #   possibly multiple cfg_file entries
+  #   config_dir (puppet controled)
+  #   config_dir_debian (extra debian config in /etc/nagios-plugins/config)
+  #
+  #
   file { 'nagios_main_cfg':
     path   => "${nagios::defaults::vars::int_cfgdir}/nagios.cfg",
-    source => [
-      "puppet:///modules/nagios/configs/${::operatingsystem}/nagios.cfg",
-      'puppet:///modules/nagios/configs/nagios.cfg'],
+    source => "puppet:///modules/nagios/configs/${::operatingsystem}/nagios.cfg",
     notify => Service['nagios'],
     mode   => '0644',
     owner  => root,
