@@ -1,5 +1,5 @@
 name 'cypherfox-nagios'
-version '0.1.0'
+version '1.0.1'
 
 author 'Lutz Behnke (see Readme for history)'
 license ''
@@ -8,3 +8,4 @@ project_page 'git://github.com/haw-hh-ai-lab/puppet-nagios'
 summary 'Provide Support for nagios server and targets'
 dependency 'puppetlabs/stdlib', '4.3.2'
 dependency 'puppetlabs/apache', '1.2.0'
+description 'Starting with this version, only Nagios 3 will be supported'
