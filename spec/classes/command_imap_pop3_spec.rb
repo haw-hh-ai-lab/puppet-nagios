@@ -6,6 +6,9 @@ require 'spec_helper'
 describe 'nagios::command::imap_pop3' do
   let(:hiera_config) { 'spec/fixtures/hiera/hiera.yaml' }
     
+  let(:facts) { {
+                 :operatingsystem        => 'Ubuntu',
+                 :osfamily => 'Debian',} }
     
   context 'set commands for default environment' do
    
@@ -24,9 +27,6 @@ describe 'nagios::command::imap_pop3' do
 
   context 'set commands for Ubuntu/Debian' do
 
-  let(:facts) { {
-                 :operatingsystem        => 'Ubuntu',
-                 :osfamily => 'Debian',} }
     
     it do
 
