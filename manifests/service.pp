@@ -61,7 +61,7 @@ define nagios::service (
       fail("Must pass a check_command to ${name} if it should be present")
     }
     if ($use_nrpe == true) {
-      include nagios::command::nrpe_timeout
+      include nagios::command::nrpe
 
       if ($nrpe_args != '') {
         $real_check_command =
