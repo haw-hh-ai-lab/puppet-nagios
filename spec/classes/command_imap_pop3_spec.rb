@@ -10,7 +10,7 @@ describe 'nagios::command::imap_pop3' do
     
     it do
 
-#      should contain_nagios_command('check_imap_ssl').that_requires('Package[nagios]')
+      should contain_nagios_command('check_imap_ssl').that_requires('Package[nagios]')
       should contain_nagios_command('check_pop3').that_requires('Package[nagios]')
       should contain_nagios_command('check_pop3_ssl').that_requires('Package[nagios]')
       should contain_nagios_command('check_managesieve').that_requires('Package[nagios]')
@@ -28,7 +28,7 @@ describe 'nagios::command::imap_pop3' do
     
     it do
 
-#      should contain_nagios_command('check_imap_ssl').that_requires('Package[nagios]')
+      should contain_nagios_command('check_imap_ssl').that_requires('Package[nagios3]')
       should contain_nagios_command('check_pop3').that_requires('Package[nagios]')
       should contain_nagios_command('check_pop3_ssl').that_requires('Package[nagios]')
       should contain_nagios_command('check_managesieve').that_requires('Package[nagios]')
