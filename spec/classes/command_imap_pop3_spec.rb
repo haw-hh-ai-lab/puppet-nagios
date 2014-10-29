@@ -33,7 +33,7 @@ describe 'nagios::command::imap_pop3' do
       should contain_nagios_command('check_pop3_ssl').that_requires('Package[nagios]')
       should contain_nagios_command('check_managesieve').that_requires('Package[nagios]')
 
-      should not contain_nagios_command('check_imap')
+      should_not contain_nagios_command('check_imap')
       
     end
   end
