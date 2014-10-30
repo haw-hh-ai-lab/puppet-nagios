@@ -16,6 +16,27 @@ describe 'nagios::command::nrpe' do
       should contain_nagios_command('check_nrpe_timeout').that_requires('Package[nagios]')
       should contain_nagios_command('check_nrpe_1arg_timeout').that_requires('Package[nagios]')
           
+      
+    end
+  end
+
+  context 'set nagios commands for nrpe checks' do
+    
+    let(:facts) { {
+               :operatingsystem        => 'Ubuntu',
+               :osfamily               => 'Debian',
+               } }
+    
+    it do
+
+      should contain_nagios_command('check_nrpe').with_ensure('absent')
+      
+      should contain_nagios_command('check_nrpe_1arg').that_requires('Package[nagios]')
+
+      should contain_nagios_command('check_nrpe_timeout').that_requires('Package[nagios]')
+      should contain_nagios_command('check_nrpe_1arg_timeout').that_requires('Package[nagios]')
+          
+      
     end
   end
 
