@@ -15,7 +15,7 @@ class nagios::apache (
 
   include nagios::params
 
-  class { 'apache':
+  class { '::apache':
     mpm_module => 'prefork', # needed by php module
   }
 
