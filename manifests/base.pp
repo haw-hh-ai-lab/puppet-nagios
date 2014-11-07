@@ -24,7 +24,7 @@ class nagios::base (
     alias  => 'nagios',
   }
 
-  ::service { 'nagios':
+  service { 'nagios':
     ensure    => running,
     name      => $nagios::params::nagios_service,
     enable    => true,
