@@ -27,7 +27,6 @@ class nagios(
   $httpd_service_name = undef,
 ) {
 
-
   case $::operatingsystem {
     'centos': {
       $cfgdir = '/etc/nagios'
@@ -53,4 +52,9 @@ class nagios(
   if $manage_munin {
     include nagios::munin
   }
+
+  # additional commands
+  include nagios::command::nrpe
+
+
 }

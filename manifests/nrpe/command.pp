@@ -24,7 +24,7 @@ define nagios::nrpe::command (
 
   file { "${nagios_nrpe_cfgdir}/nrpe.d/${name}_command.cfg":
     ensure  => $ensure,
-    mode    => 644,
+    mode    => '0644',
     owner   => root,
     group   => 0,
     notify  => Service['nagios-nrpe-server'],

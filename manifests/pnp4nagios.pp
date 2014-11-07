@@ -43,7 +43,7 @@ class nagios::pnp4nagios {
     notify => Service['npcd'];
   }
 
-  service { 'npcd':
+  ::service { 'npcd':
       ensure    => running,
       enable    => true,
       hasstatus => true,

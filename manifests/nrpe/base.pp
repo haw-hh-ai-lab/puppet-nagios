@@ -50,7 +50,7 @@ class nagios::nrpe::base {
   #    command_line => "${nagios_plugin_dir}/check_load -w ${warning_1_threshold},${warning_5_threshold},${warning_15_threshold} -c ${critical_1_threshold},${critical_5_threshold},${critical_15_threshold}",
   #}
 
-  service { 'nagios-nrpe-server':
+  ::service { 'nagios-nrpe-server':
     ensure    => running,
     enable    => true,
     pattern   => 'nrpe',

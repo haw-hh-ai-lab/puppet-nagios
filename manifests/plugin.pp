@@ -24,6 +24,6 @@ define nagios::plugin (
     require => Package['nagios-plugins'],
     owner   => root,
     group   => 0,
-    mode    => 0755;
+    mode    => '0755';
   }
 }

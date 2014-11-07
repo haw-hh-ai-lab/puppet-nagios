@@ -15,21 +15,21 @@ class nagios::apache (
 
   include nagios::params
 
-  class { '::apache':
+  class { 'apache':
     mpm_module => 'prefork', # needed by php module
   }
 
   $ssl_cert_file_name = $ssl_cert_file ? {
-      'unset' => $apache::params::default_ssl_cert,
+      'unset' => $::apache::params::default_ssl_cert,
       default => $ssl_cert_file,
   }
   $ssl_key_file_name = $ssl_cert_file ? {
-      'unset' => $apache::params::default_ssl_key,
+      'unset' => $::apache::params::default_ssl_key,
       default => $ssl_key_file,
   }
 
   $ssl_ca_cert_file_name = $ssl_ca_cert_file ? {
-      'unset' => "${apache::params::ssl_certs_dir}/ca-certificates.crt",
+      'unset' => "${::apache::params::ssl_certs_dir}/ca-certificates.crt",
       default => $ssl_ca_cert_file,
   }
 
@@ -37,7 +37,7 @@ class nagios::apache (
     allow_external_cmd => $allow_external_cmd,
     manage_munin       => $manage_munin,
     manage_shorewall   => $manage_shorewall,
-    httpd_service_name => $apache::params::service_name,
+    httpd_service_name => $::apache::params::service_name,
   }
 
 
@@ -76,7 +76,7 @@ class nagios::apache (
         ensure => present,
         source => 'puppet:///nagios/configs/apache2.conf',
 
-        notify => Service[$apache::params::service_name],
+        notify => Service[$::apache::params::service_name],
       }
 
     }
@@ -109,22 +109,22 @@ class nagios::apache (
       $auth_ldap_bind_dn = $auth_config[ldap_bind_dn]
       $auth_ldap_bind_pw = $auth_config[ldap_bind_pw]
 
-      case $apache::version::default {
+      case $::apache::version::default {
         '2.2': {
           file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
             ensure  => present,
             content => template('nagios/nagios/apache2_w_ldap.conf.erb'),
-            notify  => Service[$apache::params::service_name],
+            notify  => Service[$::apache::params::service_name],
           }
         }
         '2.4': {
           file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
             ensure  => present,
             content => template('nagios/nagios/apache2_w_ldap_v2.4.conf.erb'),
-            notify  => Service[$apache::params::service_name],
+            notify  => Service[$::apache::params::service_name],
           }
         }
-        default: { fail("Apache version ${apache::version::default} not supported") }
+        default: { fail("Apache version ${::apache::version::default} not supported") }
       }
 
     }

@@ -11,7 +11,7 @@ class nagios::nrpe::ubuntu inherits nagios::nrpe::base {
     name => 'nagios-plugins-basic'
   }
 
-  Service['nagios-nrpe-server'] {
+  ::Service['nagios-nrpe-server'] {
     name => 'nagios-nrpe-server'
   }
 

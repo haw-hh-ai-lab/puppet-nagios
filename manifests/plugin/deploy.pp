@@ -31,7 +31,7 @@ define nagios::plugin::deploy (
   file { "nagios_plugin_${name}":
     path    => "$nagios::plugin::scriptpaths::script_path/${name}",
     source  => "puppet:///modules/${real_source}",
-    mode    => 0755,
+    mode    => '0755',
     owner   => root,
     group   => 0,
     require => Package[$require_package],

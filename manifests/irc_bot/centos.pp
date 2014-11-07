@@ -6,7 +6,7 @@ class nagios::irc_bot::centos inherits nagios::irc_bot::base {
     name => 'perl-Net-IRC',
   }
 
-  Service['nagios-nsa'] {
+  ::Service['nagios-nsa'] {
     enable => true,
   }
 }

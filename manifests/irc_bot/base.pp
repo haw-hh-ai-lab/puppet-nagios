@@ -37,7 +37,7 @@ class nagios::irc_bot::base {
     ensure => present,
   }
 
-  service { 'nagios-nsa':
+  ::service { 'nagios-nsa':
     ensure    => 'running',
     hasstatus => true,
     require   => [

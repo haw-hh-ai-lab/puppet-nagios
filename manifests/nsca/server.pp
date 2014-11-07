@@ -8,7 +8,7 @@ class nagios::nsca::server {
     ensure => installed
   }
 
-  service { 'nsca':
+  ::service { 'nsca':
     ensure     => running,
     hasstatus  => false,
     hasrestart => true,

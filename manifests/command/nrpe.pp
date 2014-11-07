@@ -4,7 +4,7 @@
 class nagios::command::nrpe {
 
   case $operatingsystem {
-    'debian', 'ubuntu' : { # Debian/Ubuntu already define those checks
+    'Debian', 'Ubuntu': { # Debian/Ubuntu already define those checks
 
       nagios_command { 'check_nrpe':
         ensure => absent
@@ -14,7 +14,7 @@ class nagios::command::nrpe {
         ensure => absent
       }
     }
-    default            : {
+    default: {
 
       # this command runs a program $ARG1$ with arguments $ARG2$ via the NRPE mechanism
       nagios_command { 'check_nrpe':
