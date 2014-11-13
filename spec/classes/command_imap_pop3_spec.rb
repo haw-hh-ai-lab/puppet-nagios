@@ -3,7 +3,7 @@
 # 
 require 'spec_helper'
 
-describe 'nagios::command::imap_pop3' do
+describe 'nagios::command::imap_pop3', :type => :class do
   let(:hiera_config) { 'spec/fixtures/hiera/hiera.yaml' }
     
   context 'set commands for default environment' do
