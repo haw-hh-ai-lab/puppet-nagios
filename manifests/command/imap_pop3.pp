@@ -1,3 +1,6 @@
+#
+#  set the check commands for IMAP and POP services.
+#
 class nagios::command::imap_pop3 {
   case $operatingsystem {
     'debian', 'ubuntu' : { # Debian/Ubuntu already define those checks

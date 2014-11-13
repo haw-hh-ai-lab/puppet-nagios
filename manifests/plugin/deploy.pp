@@ -29,7 +29,7 @@ define nagios::plugin::deploy (
   include nagios::plugin::scriptpaths
 
   file { "nagios_plugin_${name}":
-    path    => "$nagios::plugin::scriptpaths::script_path/${name}",
+    path    => "${nagios::plugin::scriptpaths::script_path}/${name}",
     source  => "puppet:///modules/${real_source}",
     mode    => '0755',
     owner   => root,

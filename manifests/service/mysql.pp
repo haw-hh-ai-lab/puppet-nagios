@@ -18,7 +18,7 @@ define nagios::service::mysql (
 ) {
 
   if ($check_host == 'absent') {
-    fail("Please specify a hostname, ip address or socket to check a mysql instance.")
+    fail('Please specify a hostname, ip address or socket to check a mysql instance.')
   }
 
   if $check_name != undef {
