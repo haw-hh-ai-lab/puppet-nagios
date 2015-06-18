@@ -8,25 +8,24 @@ describe 'nagios' do
   
   concatdir            = '/var/lib/puppet/concat'
     
-  let(:facts) { {
-                 # the module concat needs this. Normaly set by concat through pluginsync
-                 :concat_basedir         => concatdir,
-                   
-                 :domain                 => 'example.com',
-				 :fqdn                   => 'testnode.example.com',
-                 :hostname               => 'testnode',
-                 :operatingsystem        => 'Ubuntu',
-                 :operatingsystemrelease => '13.10',
-                 :osfamily => 'Debian',
-                 :ipaddress => '192.168.0.1'} }
+  let(:facts) do
+    {
+       # the module concat needs this. Normaly set by concat through pluginsync
+       :concat_basedir         => concatdir,
+
+       :domain                 => 'example.com',
+       :fqdn                   => 'testnode.example.com',
+       :hostname               => 'testnode',
+       :operatingsystem        => 'Ubuntu',
+       :operatingsystemrelease => '13.10',
+       :osfamily               => 'Debian',
+       :ipaddress              => '192.168.0.1'
+    }
+  end
   
   context 'minimal setup' do
-    let(:title) { 'Test NFS Mount' }
 
-    it do
-
-      should compile
+    it { should compile }
       
-    end
   end
 end
