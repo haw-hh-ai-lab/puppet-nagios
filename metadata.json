@@ -1,0 +1,19 @@
+{
+  "name": "cypherfox-nagios",
+  "version": "0.1.0",
+  "summary": "Provide Support for nagios server and targets. This work is a continuation of work by David Schmitt, Riseup Networks and the immerda.ch project.",
+  "author": "Lutz Behnke",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.3.2"
+    },
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": ">= 1.2.0"
+    }
+  ],
+  "source": "git://github.com/haw-hh-ai-lab/puppet-nagios",
+  "project_page": "git://github.com/haw-hh-ai-lab/puppet-nagios",
+  "license": "GNU Public License 3.0"
+}
