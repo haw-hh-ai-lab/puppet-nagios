@@ -7,12 +7,13 @@ class nagios::target(
   $nagios_alias = $::hostname,
   $hostgroups = 'absent',
   $contact_groups = 'absent',
-  $contacts = 'absent'
+  $contacts = 'absent',
+  $host_template = 'generic-host',
 ){
   @@nagios_host { $::fqdn:
     address => $address,
     alias => $nagios_alias,
-    use => 'generic-host',
+    use => $host_template,
   }
 
   if ($parents != 'absent') {
