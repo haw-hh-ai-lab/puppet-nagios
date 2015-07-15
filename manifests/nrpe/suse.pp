@@ -20,7 +20,7 @@ class nagios::nrpe::suse inherits nagios::nrpe::base {
       ensure => present; # for check_cpustats.sh
   }
 
-  ::Service['nagios-nrpe-server'] {
+  Service['nagios-nrpe-server'] {
     name => 'nrpe'
   }
 
