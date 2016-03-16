@@ -12,8 +12,8 @@ class nagios::target(
 ){
   @@nagios_host { $::fqdn:
     address => $address,
-    alias => $nagios_alias,
-    use => $host_template,
+    alias   => $nagios_alias,
+    use     => $host_template,
   }
 
   if ($parents != 'absent') {

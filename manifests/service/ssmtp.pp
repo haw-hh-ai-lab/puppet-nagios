@@ -9,15 +9,18 @@ define nagios::service::ssmtp (
     default  => $host
   }
 
-  nagios::service {
-    "ssmtp_${name}_${port}":
-      ensure => $ensure;
+  nagios::service { "ssmtp_${name}_${port}":
+    ensure => $ensure
+  }
 
-    "ssmtp_cert_${name}_${port}":
-      ensure => $cert_days ? {
-        'absent' => 'absent',
-        default  => $ensure
-      } ;
+
+  $cert_ensure = $cert_days ? {
+    'absent' => 'absent',
+    default  => $ensure
+  }
+
+  nagios::service { "ssmtp_cert_${name}_${port}":
+    ensure => $cert_ensure,
   }
 
   if $ensure != 'absent' {

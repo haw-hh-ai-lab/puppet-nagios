@@ -4,7 +4,7 @@
 
 class nagios::nrpe::params {
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'FreeBSD'          : {
       $default_nrpe_cfgdir = '/usr/local/etc'
       $default_nrpe_pid_file = '/var/spool/nagios/nrpe2.pid'

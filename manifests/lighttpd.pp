@@ -25,7 +25,7 @@ class nagios::lighttpd(
 
   class{'nagios':
     allow_external_cmd => $allow_external_cmd,
-    manage_munin => $manage_munin,
-    manage_shorewall => $manage_shorewall,
+    manage_munin       => $manage_munin,
+    manage_shorewall   => $manage_shorewall,
   }
 }

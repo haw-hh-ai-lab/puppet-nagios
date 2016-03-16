@@ -18,21 +18,26 @@ define nagios::service::smtp (
     default  => $host
   }
 
-  nagios::service {
-    "smtp_${name}_${port}":
-      ensure => $ensure;
+  $smtps_ensure = $tls ? {
+    true    => $ensure,
+    default => 'absent'
+  }
 
-    "smtp_tls_${name}_${port}":
-      ensure => $tls ? {
-        true    => $ensure,
-        default => 'absent'
-      } ;
+  $cert_ensure = $cert_days ? {
+    'absent' => 'absent',
+    default  => $ensure
+  }
 
-    "smtp_tls_cert_${name}_${port}":
-      ensure => $cert_days ? {
-        'absent' => 'absent',
-        default  => $ensure
-      } ;
+  nagios::service { "smtp_${name}_${port}":
+    ensure => $ensure
+  }
+
+  nagios::service { "smtp_tls_${name}_${port}":
+    ensure => $smtps_ensure
+  }
+
+  nagios::service { "smtp_tls_cert_${name}_${port}":
+    ensure => $cert_ensure
   }
 
   if $ensure != 'absent' {

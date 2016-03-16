@@ -74,7 +74,7 @@ class nagios::apache (
 
       file { "${nagios::defaults::vars::int_cfgdir}/apache2.conf":
         ensure => present,
-        source => 'puppet:///nagios/configs/apache2.conf',
+        source => 'puppet:///modules/nagios/configs/apache2.conf',
 
         notify => Service[$::apache::params::service_name],
       }

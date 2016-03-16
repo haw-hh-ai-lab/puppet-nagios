@@ -14,15 +14,17 @@ define nagios::service::pop (
     default  => $host
   }
 
-  nagios::service {
-    "pop_${name}_${port}":
-      ensure => $ensure;
+  nagios::service { "pop_${name}_${port}":
+    ensure => $ensure,
+  }
 
-    "pops_${name}_${tls_port}":
-      ensure => $tls ? {
-        true    => $ensure,
-        default => 'absent'
-      } ;
+  $pops_ensure = $tls ? {
+    true    => $ensure,
+    default => 'absent'
+  }
+
+  nagios::service { "pops_${name}_${tls_port}":
+      ensure => $pops_ensure,
   }
 
   if $ensure != 'absent' {

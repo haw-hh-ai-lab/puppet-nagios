@@ -19,7 +19,7 @@ class nagios::nsca::server {
     source => 'puppet:///modules/nagios/nsca/nsca.cfg',
     owner  => 'nagios',
     group  => 'nogroup',
-    mode   => '400',
+    mode   => '0400',
     notify => Service['nsca'],
   }
 

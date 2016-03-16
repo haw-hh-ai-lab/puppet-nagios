@@ -13,15 +13,17 @@ define nagios::service::imap (
     default  => $host
   }
 
-  nagios::service {
-    "imap_${name}_${port}":
-      ensure => $ensure;
+  nagios::service { "imap_${name}_${port}":
+    ensure => $ensure,
+  }
 
-    "imaps_${name}_${tls_port}":
-      ensure => $tls ? {
-        true    => $ensure,
-        default => 'absent'
-      } ;
+  $imaps_ensure = $tls ? {
+    true    => $ensure,
+    default => 'absent'
+  }
+
+  nagios::service { "imaps_${name}_${tls_port}":
+    ensure => $imaps_ensure,
   }
 
   if $ensure != 'absent' {

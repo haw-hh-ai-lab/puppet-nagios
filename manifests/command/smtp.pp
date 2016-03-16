@@ -3,7 +3,7 @@
 #
 
 class nagios::command::smtp {
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian', 'ubuntu' : {  # Debian/Ubuntu already define those checks
       }
     default        : {
